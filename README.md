@@ -7,6 +7,14 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
 
+## Command for deploy
+run command pada root folder project:
+
+- buat file .env dari developer di root folder.
+- masukkan kebutuhan koneksi mysql di file .env.
+- run command composer install.
+- run command php artisan migrate.
+- run command php artisan db:seed.
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:

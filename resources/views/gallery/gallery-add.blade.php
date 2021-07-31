@@ -2,7 +2,10 @@
 @section('content')
 
 <!-- Page Heading -->
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
+<div class="d-sm-flex align-items-center mb-4">
+    <a href="{{ route('get.list-gallery') }}" class="text-gray-800 mr-3" style="font-size:1.5rem">
+        <i class="fas fa-arrow-circle-left fa-fw"></i>
+    </a>
     <h1 class="h3 mb-0 text-gray-800">{{ ucwords($title) }}</h1>
     <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
         <i class="fas fa-plus fa-sm text-white-50"></i> Add New

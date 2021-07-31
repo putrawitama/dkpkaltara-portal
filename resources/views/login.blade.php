@@ -21,16 +21,16 @@
 </div>
 
 <body class="bg-gradient-primary">
-    <div class="wrapper" id="main-wrapper">
+    <div class="wrapper h-100" id="main-wrapper">
         @php $notif = session('notif'); @endphp
         @if ($notif)
         <div id="notif" data-status="{!! $notif['status'] !!}" data-message="{!! $notif['message'] !!}" data-url="{!! $notif['url'] !!}">
         </div>
         @endif
         
-        <div class="container">
+        <div class="container h-100">
             <!-- Outer Row -->
-            <div class="row justify-content-center">
+            <div class="row justify-content-center align-items-center h-100">
                 <div class="col-xl-10 col-lg-12 col-md-9">
                     <div class="card o-hidden border-0 shadow-lg my-5">
                         <div class="card-body p-0">

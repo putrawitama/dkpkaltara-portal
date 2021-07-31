@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Job;
+use App\Wilayah;
 
 use Request;
 
@@ -64,6 +65,8 @@ class JobsController extends Controller
     }
 
     public function add() {
+        $kota = Wilayah::select('kabupaten')->groupBy('kabupaten')->get()->toArray();
+        dd($kota);
         return view('jobs.jobs-add')->with([
             'pageTitle' => 'Manage Jobs', 
             'title' => 'Add Jobs', 
