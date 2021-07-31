@@ -1,0 +1,129 @@
+@font-face {
+    font-family: 'Gilroy-Bold';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Gilroy-Bold'), url('../fonts/Gilroy/Gilroy-Bold.otf') format('opentype');
+}
+@font-face {
+    font-family: 'Gilroy-Heavy';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Gilroy-Heavy'), url('../fonts/Gilroy/Gilroy-Heavy.otf') format('opentype');
+}
+@font-face {
+    font-family: 'Gilroy-Light';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Gilroy-Light'), url('../fonts/Gilroy/Gilroy-Light.otf') format('opentype');
+}
+@font-face {
+    font-family: 'Gilroy-Medium';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Gilroy-Medium'), url('../fonts/Gilroy/Gilroy-Medium.otf') format('opentype');
+}
+@font-face {
+    font-family: 'Gilroy-Regular';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Gilroy-Regular'), url('../fonts/Gilroy/Gilroy-Regular.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'Proxima-Regular';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Proxima-Regular'), url('../fonts/ProximaNova/FontsFree-Net-proxima_nova_reg-webfont.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Proxima-Semibold';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Proxima-Semibold'), url('../fonts/ProximaNova/FontsFree-Net-Proxima-Nova-Sbold.otf') format('opentype');
+}
+@font-face {
+    font-family: 'Proxima-Bold';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Proxima-Bold'), url('../fonts/ProximaNova/FontsFree-Net-proxima_nova_bold-webfont.ttf') format('truetype');
+}
+
+html, body {
+    height: 100%;
+}
+
+/* body {
+    font-family: 'Proxima-Regular', sans-serif!important;
+    font-weight: 400;
+    font-size: 14px;
+    background-color: #fff;
+    overflow-x: hidden;
+    overflow-y: auto;
+    margin: 0;
+    color: #707070;
+} */
+
+.swal2-title {
+    font-size: 1.3em;
+}
+
+label.error {
+    color: #F64662;
+    margin-bottom: 0px;
+    margin-top: .7rem;
+    margin-left: .9rem;
+    font-size: 12px;
+    width: 100% !important;
+}
+
+#loading-overlay{
+    display: none;
+}
+
+#loading-overlay.active{
+    display: block;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 99999;
+    background: #00000096;
+    padding-top: 20%;
+}
+
+.loader {
+    margin: 7px auto;
+    border: 10px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 10px solid #013354;
+    width: 100px;
+    height: 100px;
+    -webkit-animation: spin 1s linear infinite; /* Safari */
+    animation: spin 1s linear infinite;
+}
+
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #BEBEBE;
+    border-radius: 3px;
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #6A6A6A; 
+}

@@ -1,0 +1,99 @@
+.swal2-title {
+    font-size: 1.3em;
+}
+
+.custom-file-multiple {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: calc(1.5em + .75rem + 2px);
+    margin-bottom: 0;
+}
+.custom-file-multiple {
+    background: #eaecf4;
+    box-shadow: 0px 16px 24px rgba(190, 190, 190, 0.16);
+    border-radius: 8px;
+    border: none;
+    height: 200px;
+    width: 172px;
+    /* padding: .375rem 1.1rem; */
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 120%;
+    color: #252525;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.custom-file-multiple .custom-file-label {
+    background: transparent;
+    margin-bottom: 0px;
+    border: none;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: .375rem .35rem;
+}
+.custom-file-multiple .custom-file-label::after {
+    /* color: #fff; */
+    background-color: transparent;
+    content: "";
+    display: none;
+    /* background-image: url('../image/icon/icon-upload.svg');
+    background-repeat: no-repeat;
+    top: 12px;
+    right: 17px; */
+}
+.custom-file-multiple .custom-file-label button {
+    border: none;
+    border-radius: 4px;
+    color: grey;
+    padding: 4px 9px;
+    background: #d5d5d5;
+}
+.custom-file-multiple .custom-file-input {
+    background: transparent;
+    height: calc(100% - 40px);
+    margin-top: 40px;
+}
+.custom-file-multiple span {
+    position: absolute;
+    top: 80px;
+    left: 67px;
+}
+.custom-file-multiple span i {
+    font-size: 35px;
+    opacity: .4;
+}
+
+.custom-switch {
+    height: 37px;
+    display: flex;
+    align-items: center;
+    padding-left: 3.5rem;
+}
+.custom-switch .custom-control-label::before {
+    height: 1.5rem;
+    top: 0rem;
+    left: -3.3rem;
+    width: 2.75rem;
+    border-radius: 1.5rem;
+}
+.custom-switch .custom-control-label::after {
+    top: calc(.11rem + 1.5px);
+    left: calc(-3.3rem + 2px);
+    width: calc(1.3rem - 4px);
+    height: calc(1.3rem - 4px);
+}
+.custom-switch .custom-control-input:checked~.custom-control-label::after {
+    transform: translateX(1.4rem);
+}
+
+.btn-action {
+    text-decoration: none;
+    border: none;
+    outline: none;
+}
