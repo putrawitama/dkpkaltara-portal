@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Security-Policy" content="img-src * 'self' data: https:; default-src *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'" />
     <meta charset="UTF-8">
-    <meta name="base" content="{{URL::route('home')}}" />
+    <meta name="base" content="http://localhost:8001" />
     <meta name="baseImage" content="{{ url('storage') }}" />
     <meta name="csrf-token" content="{{csrf_token()}}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{asset('css/sb-admin-2.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('/css/login.min.css')}}" />
-    <title>Kosmetik</title>
+    <title>DKP Kaltara</title>
 </head>
 <div id="loading-overlay">
     <div class="loader"></div>
@@ -41,9 +41,11 @@
                                     <div class="my-5">
                                         <div class="p-5">
                                             <div class="text-center">
-                                                <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                                <img src="{{ asset('img/logo/logo_banner.png') }}" height="50" alt="">
+                                                <h1 class="h4 text-gray-900 mb-4 mt-3">Selamat Datang</h1>
                                             </div>
                                             <form class="user" id="formLogin" action="{{ route('post.login') }}" method="POST" ajax="true">
+                                                @csrf
                                                 <div class="form-group">
                                                     <input type="email" name="email" id="email" class="form-control form-control-user w-100"
                                                         id="exampleInputEmail" aria-describedby="emailHelp"
@@ -64,9 +66,9 @@
                                                 <button type="submit" class="btn btn-primary btn-user btn-block">Login</button>
                                             </form>
                                             <hr>
-                                            <div class="text-center">
+                                            <!-- <div class="text-center">
                                                 <a class="small" href="forgot-password.html">Forgot Password?</a>
-                                            </div>
+                                            </div> -->
                                             <div class="text-center">
                                                 <!-- <a class="small" href="register.html">Create an Account!</a> -->
                                             </div>

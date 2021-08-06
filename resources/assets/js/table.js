@@ -57,57 +57,110 @@ var table = {
 
 			table.serverSide('tableGallery',column,'gallery/list',null,columnDefs)
 		}
-		if ($('#tableJobs').length) {
+		if ($('#tableArticle').length) {
 			var column = [
-				{'data':'job_position'},
-				{'data':'job_desc'},
-				{'data':'placement'},
+				{'data':'title'},
+				{'data':'sub_menu.name'},
+				{'data':'publish'},
 				{'data':'created_at'},
                 {'data':null},
 			];
 
 			columnDefs = [
+                {
+                    "targets": 2,
+		            "data": "publish",
+                    "orderable": false,
+		            "render": function(data, type, full, meta){
+                        var data = 'Unpublish';
+                        if (full.publish == 1) {
+                            data = 'Published';
+                        }
+
+                        return data;
+                    }
+                },
 				{
 		       		"targets": 4,
 		            "data": "id",
+                    "width": "10%",
                     "orderable": false,
 		            "render": function(data, type, full, meta){
                         var id = encodeURIComponent(window.btoa(full.id));
 
-						if (full.status == 1) { // aktif
-							var toggle = '<button class="dropdown-item btnActiveUser">'+
-											'<img src="/image/icon/icon-action-deactive.svg" alt="icon" />'+
-											'<p>Deactive</p>'+
-										'</button>';
-						} else {
-							var toggle = '<button class="dropdown-item btnDeactiveUser">'+
-											'<img src="/image/icon/icon-action-active.svg" alt="icon" />'+
-											'<p>Active</p>'+
-										'</button>';
-						}
+                        if (full.publish == 1) {
+                            var toggle = '<a href="/article/unpublish/'+full.link_id+'" class="btn btn-primary btn-circle btn-sm btn-action mx-1" title="Unpublish">'+
+                                            '<i class="fas fa-cloud-download-alt fa-sm"></i>'+
+                                        '</a>';
+                        } else {
+                            var toggle = '<a href="/article/publish/'+full.link_id+'" class="btn btn-primary btn-circle btn-sm btn-action mx-1" title="Publish">'+
+                                            '<i class="fas fa-cloud-upload-alt fa-sm"></i>'+
+                                        '</a>';
+                        }
 						
-						var data = '<div class="btn-group table-action-dropdown">'+
-										'<button type="button" class="btn btn-table-action dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
-						  					'<i class="fas fa-ellipsis-v"></i>'+
-										'</button>'+
-										'<div class="dropdown-menu dropdown-menu-right">'+
-											'<button class="dropdown-item btnViewUser">'+
-												'<img src="/image/icon/icon-action-view.svg" alt="icon" />'+
-												'<p>View</p>'+
-											'</button>'+
-											'<a href="/user/edit/'+full.link_id+'" class="dropdown-item">'+
-												'<img src="/image/icon/icon-action-edit.svg" alt="icon" />'+
-												'<p>Edit</p>'+
-											'</a>'+
-											toggle+
-										'</div>'+
-									'</div>';
+						var data = '<div class="d-flex">'+
+                                        '<a href="/article/edit/'+full.link_id+'" class="btn btn-primary btn-circle btn-sm btn-action mx-1" title="Edit">'+
+                                            '<i class="fas fa-eye fa-sm"></i>'+
+                                        '</a>'+
+                                        toggle+
+                                        '<a href="/article/delete/'+full.link_id+'" class="btn btn-primary btn-circle btn-sm btn-action mx-1" title="Delete">'+
+                                            '<i class="fas fa-trash-alt fa-sm"></i>'+
+                                        '</a>'
+                                    '</div>';
+                        
 		              	return data;
 		           	}
 		        }
 	        ];
 
-			table.serverSide('tableJobs',column,'jobs/list',null,columnDefs)
+			table.serverSide('tableArticle',column,'article/list',null,columnDefs)
+		}
+		if ($('#tableMenu').length) {
+			var column = [
+				{'data':'name'},
+				{'data':'slug'},
+				{'data':'is_child'},
+				{'data':'created_at'},
+                {'data':null},
+			];
+
+			columnDefs = [
+                {
+                    "targets": 2,
+		            "data": "is_child",
+                    "orderable": false,
+		            "render": function(data, type, full, meta){
+                        var data = 'Parent';
+                        if (full.is_child == 1) {
+                            data = 'Child';
+                        }
+
+                        return data;
+                    }
+                },
+				{
+		       		"targets": 4,
+		            "data": "id",
+                    "width": "10%",
+                    "orderable": false,
+		            "render": function(data, type, full, meta){
+                        var id = encodeURIComponent(window.btoa(full.id));
+						
+						var data = '<div class="d-flex">'+
+                                        '<a href="/menu/edit/'+full.link_id+'" class="btn btn-primary btn-circle btn-sm btn-action mx-1" title="Edit">'+
+                                            '<i class="fas fa-eye fa-sm"></i>'+
+                                        '</a>'+
+                                        '<a href="/menu/delete/'+full.link_id+'" class="btn btn-primary btn-circle btn-sm btn-action mx-1" title="Delete">'+
+                                            '<i class="fas fa-trash-alt fa-sm"></i>'+
+                                        '</a>'
+                                    '</div>';
+                        
+		              	return data;
+		           	}
+		        }
+	        ];
+
+			table.serverSide('tableMenu',column,'menu/list',null,columnDefs)
 		}
 	},
 	filter:function(id,value){

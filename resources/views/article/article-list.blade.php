@@ -4,7 +4,7 @@
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">{{ ucwords($title) }}</h1>
-    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+    <a href="{{ route('get.add-article') }}" class="d-none d-sm-inline-block btn btn-primary shadow-sm px-4">
         <i class="fas fa-plus fa-sm text-white-50"></i> Add New
     </a>
 </div>
@@ -15,20 +15,22 @@
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
     <div class="card-body">
-        <table class="table table-bordered w-100" id="tableJobs" cellspacing="0">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Qty</th>
-                    <th>Office</th>
-                    <th>Age</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
+        <div class="table-responsive">
+            <table class="table table-bordered w-100 display" id="tableArticle" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Page</th>
+                        <th>Publish</th>
+                        <th>Created at</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
 
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 

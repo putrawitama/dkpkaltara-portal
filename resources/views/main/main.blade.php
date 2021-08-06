@@ -3,11 +3,11 @@
 <head>
     <meta http-equiv="Content-Security-Policy" content="img-src * 'self' data: https:; default-src *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'" />
     <meta charset="UTF-8">
-    <meta name="base" content="{{URL::route('home')}}" />
+    <meta name="base" content="http://localhost:8001" />
     <meta name="baseImage" content="{{ url('storage') }}" />
     <meta name="csrf-token" content="{{csrf_token()}}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="{{ asset('image/favicon/android-chrome-192x192.png') }}">
+    <link rel="shortcut icon" href="{{ asset('img/logo/favicon.ico') }}">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{asset('plugin/fontawesome/css/all.min.css')}}">
     <link rel="stylesheet" href="{{asset('plugin/bootstrap-4.3.1/css/bootstrap.min.css')}}">
@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="{{asset('plugin/toastr/toastr.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/sb-admin-2.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/all.css')}}">
-    <title>Kosmetik</title>
+    <title>DKP Kaltara</title>
 </head>
 <div id="loading-overlay">
     <div class="loader"></div>
@@ -105,6 +105,7 @@
 <script src="{{asset('plugin/chartjs/chart.min.js')}}"></script>
 <script src="{{asset('plugin/mask/jquery.mask.min.js')}}"></script>
 <script src="{{asset('plugin/summernote/summernote-lite.min.js')}}"></script>
+<!-- <script src="javascript/common.js" type="text/javascript"></script> -->
 <script src="{{asset('plugin/moment/moment.js')}}"></script>
 <script src="{{asset('plugin/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js')}}"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>

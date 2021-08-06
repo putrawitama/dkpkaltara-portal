@@ -470,28 +470,36 @@ if ($('#formEditGallery').length) {
     })
 }
 
-if ($('#formAddJobs').length) {
-    $('#requirement').summernote({
-        height: 200, //set editable area's height
-        disableResizeEditor: true,
-        placeholder: 'Enter requirement',
-        toolbar: [
-            ['font', ['bold', 'italic', 'underline']],
-            // ['color', ['color']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['insert', ['link', 'picture']],
-            ['view', ['codeview']]
-        ]
-    });
-    /* clear summernote if empty  */
-    $('#requirement').each(function () {
-        var summernote = $(this);
-        $('form').on('submit', function () {
-            if (summernote.summernote('isEmpty')) {
-                summernote.val('');
-            } else if (summernote.val() == '<br>') {
-                summernote.val('');
-            }
-        });
-    });
+if ($('#formAddArticle').length) {
+    $(".imageMore").change(function(){
+        readFileImageMore(this);
+    })
+}
+
+if ($('#formEditArticle').length) {
+    $(".imageMore").change(function(){
+        readFileImageMore(this);
+    })
+}
+
+if ($('#formAddMenu').length) {
+    $("#customSwitch1").change(function(){
+		if (this.checked) {
+			console.log('true');
+			$("#selectMenu").show()
+		} else {
+			console.log('false');
+			$("#selectMenu").hide()
+		}
+	})
+}
+
+if ($('#formEditMenu').length) {
+    $("#customSwitch1").change(function(){
+		if (this.checked) {
+			$("#selectMenu").show()
+		} else {
+			$("#selectMenu").hide()
+		}
+	})
 }

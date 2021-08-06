@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('authuser')->group(function(){
-    Route::get('/', 'HomeController@index')->name('home');
+    Route::get('/dashboard', 'HomeController@index')->name('home');
 
     Route::prefix('gallery')->group(function () {
         Route::get('/', 'GalleryController@index')->name('get.list-gallery');
@@ -28,18 +28,33 @@ Route::middleware('authuser')->group(function(){
         Route::get('/delete/{id}', 'GalleryController@delete')->name('post.delete-gallery');
     });
 
-    Route::prefix('jobs')->group(function () {
-        Route::get('/', 'JobsController@index')->name('get.list-jobs');
-        Route::post('/list', 'JobsController@list')->name('post.list-jobs');
-        Route::get('/add', 'JobsController@add')->name('get.add-jobs');
-        Route::post('/store', 'JobsController@store')->name('post.store-jobs');
+    Route::prefix('article')->group(function () {
+        Route::get('/', 'ArticleController@index')->name('get.list-article');
+        Route::post('/list', 'ArticleController@list')->name('post.list-article');
+        Route::get('/add', 'ArticleController@add')->name('get.add-article');
+        Route::post('/store', 'ArticleController@store')->name('post.store-article');
+        Route::get('/edit/{id}', 'ArticleController@edit')->name('get.edit-article');
+        Route::post('/update', 'ArticleController@update')->name('post.update-article');
+        Route::get('/publish/{id}', 'ArticleController@publish')->name('post.publish-article');
+        Route::get('/unpublish/{id}', 'ArticleController@unpublish')->name('post.unpublish-article');
+        Route::get('/delete/{id}', 'ArticleController@delete')->name('post.delete-article');
     });
 
-    Route::prefix('applicant')->group(function () {
-        Route::get('/', 'ApplicantController@index')->name('get.list-applicant');
-        Route::post('/list', 'ApplicantController@list')->name('post.list-applicant');
+    Route::prefix('menu')->group(function () {
+        Route::get('/', 'MenuController@index')->name('get.list-menu');
+        Route::post('/list', 'MenuController@list')->name('post.list-menu');
+        Route::get('/add', 'MenuController@add')->name('get.add-menu');
+        Route::post('/store', 'MenuController@store')->name('post.store-menu');
+        Route::get('/edit/{id}', 'MenuController@edit')->name('get.edit-menu');
+        Route::post('/update', 'MenuController@update')->name('post.update-menu');
+        Route::get('/delete/{id}', 'MenuController@delete')->name('post.delete-menu');
     });
 });
+
+Route::get('/', 'LandingController@home')->name('landing.main');
+Route::get('/page/{menu}/{article?}', 'LandingController@listArticleByMenu')->name('landing.detail');
+Route::get('/gallery', 'LandingController@listGallery')->name('landing.gallery');
+Route::get('/gallery/{id}', 'LandingController@detailGallery')->name('landing.gallery.detail');
 
 // Login
 Route::get('/login', 'LoginController@viewLogin')->name('get.login');

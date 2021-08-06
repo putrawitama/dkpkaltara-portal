@@ -36,7 +36,7 @@ class LoginController extends Controller
 
                 return [
                     'status'   => 'success',
-                    'url'      => '/',
+                    'url'      => '/dashboard',
                     'callback' => 'login'
                 ];
             } else {

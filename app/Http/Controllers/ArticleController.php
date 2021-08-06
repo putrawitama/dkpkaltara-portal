@@ -4,18 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Security\EncryptController;
 use App\Http\Controllers\Security\ValidatorController;
-use App\Gallery;
+use App\Article;
+use App\Menu;
+use App\SubMenu;
 
 use Request;
 use Crypt;
 
-class GalleryController extends Controller
+class ArticleController extends Controller
 {
     public function index() {
-        return view('gallery.gallery-list')->with([
-            'pageTitle' => 'Manage Gallery', 
-            'title' => 'List Gallery', 
-            'sidebar' => 'gallery'
+        return view('article.article-list')->with([
+            'pageTitle' => 'Manage Article', 
+            'title' => 'List Article', 
+            'sidebar' => 'article'
         ]);
     }
 
@@ -28,19 +30,19 @@ class GalleryController extends Controller
             'sort' => (!empty(Request::get('order')[0]['dir'])) ? Request::get('order')[0]['dir'] : '',
         );
         
-        $gallery = new Gallery;
+        $article = new Article;
         
         if ($dataSend['search']){
-            $gallery = $gallery->where('title','like','%'.$dataSend['search'].'%');
+            $article = $article->where('title','like','%'.$dataSend['search'].'%');
         }
-        $count = $gallery->count();
+        $count = $article->count();
 
-        $list = $gallery->skip(intval( $dataSend["offset"]))->take(intval($dataSend["limit"]));
+        $list = $article->skip(intval( $dataSend["offset"]))->take(intval($dataSend["limit"]));
 
         if ($dataSend["order"]) {
-            $list = $list->orderBy($dataSend["order"], $dataSend["sort"])->get()->toArray();
+            $list = $list->orderBy($dataSend["order"], $dataSend["sort"])->with('subMenu')->get()->toArray();
         } else {
-            $list = $list->orderBy('created_at', $dataSend["sort"])->get()->toArray();
+            $list = $list->orderBy('created_at', $dataSend["sort"])->with('subMenu')->get()->toArray();
         }
 
         for ($i=0; $i < count($list); $i++) { 
@@ -67,10 +69,13 @@ class GalleryController extends Controller
     }
 
     public function add() {
-        return view('gallery.gallery-add')->with([
-            'pageTitle' => 'Manage Gallery', 
-            'title' => 'Add Gallery', 
-            'sidebar' => 'gallery'
+
+        $menu = SubMenu::all()->toArray();
+        return view('article.article-add')->with([
+            'pageTitle' => 'Manage Article', 
+            'title' => 'Add Article', 
+            'sidebar' => 'article',
+            'menu' => $menu
         ]);
     }
 
@@ -84,7 +89,7 @@ class GalleryController extends Controller
             
             for ($i=0; $i < count($image); $i++) {
                 $ext = $image[$i]->getClientOriginalExtension();
-                $path_path = $image[$i]->storeAs('uploads', 'image_gallery_'.time().$i.'.'.$ext, 'public');
+                $path_path = $image[$i]->storeAs('uploads', 'image_article_'.time().$i.'.'.$ext, 'public');
 
                 array_push($path, $path_path);
             }
@@ -98,27 +103,31 @@ class GalleryController extends Controller
             return back()->with('notif', $messages);
         }
 
-        $insert = new Gallery;
+        $insert = new Article;
+        $str = strtolower($data['title']);
+        $insert->slug = preg_replace('/\s+/', '-', $str);
         $insert->title = $data['title'];
-        $insert->desc = $data['desc'];
+        $insert->description = $data['desc'];
         if (isset($data['publish']) && $data['publish'] == 1) {
             $insert->publish = $data['publish'];
         }
-        $insert->images = json_encode($path);
+        $insert->thumbnail = json_encode($path);
+        $insert->user_id = 1;
+        $insert->sub_menu_id = $data['sub_menu'];
         $insert->save();
 
         if ($insert->save()) {
             $messages = [
                 'status' => 'success',
-                'message' => 'Success save gallery!',
+                'message' => 'Success save article!',
                 'url' => 'close'
             ];
 
-            return redirect('/gallery')->with('notif', $messages);
+            return redirect('/article')->with('notif', $messages);
         } else {
             $messages = [
                 'status' => 'error',
-                'message' => 'Error save gallery',
+                'message' => 'Error save article',
                 'url' => 'close'
             ];
 
@@ -129,14 +138,16 @@ class GalleryController extends Controller
     public function edit($id) {
         $id = Crypt::decryptString($id);
 
-        $detail = Gallery::where('id', $id)->first()->toArray();
-        $detail['images'] = json_decode($detail['images']);
+        $detail = Article::where('id', $id)->first()->toArray();
+        $detail['images'] = json_decode($detail['thumbnail']);
+        $menu = SubMenu::all()->toArray();
 
-        return view('gallery.gallery-edit')->with([
-            'pageTitle' => 'Manage Gallery', 
-            'title' => 'Edit Gallery', 
-            'sidebar' => 'gallery',
-            'detail' => $detail
+        return view('article.article-edit')->with([
+            'pageTitle' => 'Manage Article', 
+            'title' => 'Edit Article', 
+            'sidebar' => 'article',
+            'detail' => $detail,
+            'menu' => $menu
         ]);
     }
 
@@ -159,33 +170,37 @@ class GalleryController extends Controller
             foreach ($image as $key => $value) {
                 unset($path[$key]);
                 $ext = $value->getClientOriginalExtension();
-                $path_path = $value->storeAs('uploads', 'image_gallery_'.time().$key.'.'.$ext, 'public');
+                $path_path = $value->storeAs('uploads', 'image_article_'.time().$key.'.'.$ext, 'public');
 
                 $path[$key] = $path_path;
             }
         }
 
-        $update = Gallery::where('id', $data['id'])->first();
+        $update = Article::where('id', $data['id'])->first();
+        $str = strtolower($data['title']);
+        $update->slug = preg_replace('/\s+/', '-', $str);
         $update->title = $data['title'];
-        $update->desc = $data['desc'];
+        $update->description = $data['desc'];
         if (isset($data['publish']) && $data['publish'] == 1) {
             $update->publish = $data['publish'];
         }
-        $update->images = json_encode(array_values($path));
+        $update->thumbnail = json_encode(array_values($path));
+        $update->user_id = 1;
+        $update->sub_menu_id = $data['sub_menu'];
         $update->save();
 
         if ($update->save()) {
             $messages = [
                 'status' => 'success',
-                'message' => 'Success edit gallery!',
+                'message' => 'Success edit article!',
                 'url' => 'close'
             ];
 
-            return redirect('/gallery')->with('notif', $messages);
+            return redirect('/article')->with('notif', $messages);
         } else {
             $messages = [
                 'status' => 'error',
-                'message' => 'Error edit gallery',
+                'message' => 'Error edit article',
                 'url' => 'close'
             ];
 
@@ -196,22 +211,22 @@ class GalleryController extends Controller
     public function publish($id) {
         $id = Crypt::decryptString($id);
 
-        $update = Gallery::where('id', $id)->first();
+        $update = Article::where('id', $id)->first();
         $update->publish = 1;
         $update->save();
         
         if ($update->save()) {
             $messages = [
                 'status' => 'success',
-                'message' => 'Success publish gallery!',
+                'message' => 'Success publish article!',
                 'url' => 'close'
             ];
 
-            return redirect('/gallery')->with('notif', $messages);
+            return redirect('/article')->with('notif', $messages);
         } else {
             $messages = [
                 'status' => 'error',
-                'message' => 'Error publish gallery',
+                'message' => 'Error publish article',
                 'url' => 'close'
             ];
 
@@ -222,22 +237,22 @@ class GalleryController extends Controller
     public function unpublish($id) {
         $id = Crypt::decryptString($id);
 
-        $update = Gallery::where('id', $id)->first();
+        $update = Article::where('id', $id)->first();
         $update->publish = 0;
         $update->save();
         
         if ($update->save()) {
             $messages = [
                 'status' => 'success',
-                'message' => 'Success unpublish gallery!',
+                'message' => 'Success unpublish article!',
                 'url' => 'close'
             ];
 
-            return redirect('/gallery')->with('notif', $messages);
+            return redirect('/article')->with('notif', $messages);
         } else {
             $messages = [
                 'status' => 'error',
-                'message' => 'Error unpublish gallery',
+                'message' => 'Error unpublish article',
                 'url' => 'close'
             ];
 
@@ -248,20 +263,20 @@ class GalleryController extends Controller
     public function delete($id) {
         $id = Crypt::decryptString($id);
 
-        $delete = Gallery::where('id', $id)->delete();
+        $delete = Article::where('id', $id)->delete();
         
         if ($delete) {
             $messages = [
                 'status' => 'success',
-                'message' => 'Success delete gallery!',
+                'message' => 'Success delete article!',
                 'url' => 'close'
             ];
 
-            return redirect('/gallery')->with('notif', $messages);
+            return redirect('/article')->with('notif', $messages);
         } else {
             $messages = [
                 'status' => 'error',
-                'message' => 'Error delete gallery',
+                'message' => 'Error delete article',
                 'url' => 'close'
             ];
 

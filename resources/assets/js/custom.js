@@ -7,4 +7,7 @@ $(document).ready(function() {
 			placeholder: "Pilih Parameter Pemeriksaan"
 		});
 	}
+	if ($('.carousel').length) {
+		$('.carousel').carousel();
+	}
 })

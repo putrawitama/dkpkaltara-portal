@@ -3,9 +3,10 @@
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home') }}">
         <div class="sidebar-brand-icon">
-            <i class="fas fa-heartbeat"></i>
+            <!-- <i class="fas fa-heartbeat"></i> -->
+            <img src="{{ asset('img/logo/logo.png') }}" alt="logo" height=50>
         </div>
-        <div class="sidebar-brand-text mx-3">Admin<sup>Inc</sup></div>
+        <div class="sidebar-brand-text mx-3">DKP Kaltara</div>
     </a>
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
@@ -20,13 +21,20 @@
     <hr class="sidebar-divider">
     <!-- Heading -->
     <div class="sidebar-heading">
-        Gallery
+        Managements
     </div>
     
-    <li class="nav-item {{ $sidebar == 'gallery' ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('get.list-gallery') }}">
+    <!-- <li class="nav-item {{ $sidebar == 'gallery' ? 'active' : '' }}">
+        <a class="nav-link" href="">
             <i class="fas fa-fw fa-images"></i>
             <span>Manage Gallery</span>
+        </a>
+    </li> -->
+
+    <li class="nav-item {{ $sidebar == 'menu' ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('get.list-menu') }}">
+            <i class="fas fa-fw fa-bars"></i>
+            <span>Manage Menu</span>
         </a>
     </li>
     
@@ -34,22 +42,22 @@
     <hr class="sidebar-divider">
     <!-- Heading -->
     <div class="sidebar-heading">
-        Jobs
+        Articles
     </div>
     <!-- Nav Item - Charts -->
     <li class="nav-item {{ $sidebar == 'jobs' ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('get.list-jobs') }}">
+        <a class="nav-link" href="{{ route('get.list-article') }}">
             <i class="fas fa-fw fa-handshake"></i>
-            <span>Manage Jobs</span>
+            <span>Manage Article</span>
         </a>
     </li>
     <!-- Nav Item - Tables -->
-    <li class="nav-item {{ $sidebar == 'applicant' ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('get.list-applicant') }}">
+    <!-- <li class="nav-item {{ $sidebar == 'applicant' ? 'active' : '' }}">
+        <a class="nav-link" href="">
             <i class="fas fa-fw fa-file-alt"></i>
             <span>Manage Applicant</span>
         </a>
-    </li>
+    </li> -->
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
     <!-- Sidebar Toggler (Sidebar) -->

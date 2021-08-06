@@ -14,7 +14,7 @@ class UserSeeder extends Seeder
     {
         User::insert([
             'name' => 'Admin User',
-            'email' => 'admin@kosmetik.id',
+            'email' => 'admin@admin.com',
             'password' => Hash::make('123456aB'.env('SALT_PASS')),
             'created_at' => date('Y-m-d H:i:s')
         ]);
