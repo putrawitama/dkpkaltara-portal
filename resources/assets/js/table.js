@@ -81,6 +81,18 @@ var table = {
                     }
                 },
 				{
+					"targets": 3,
+		            "data": "created_at",
+		            "render": function(data, type, full, meta){
+                        var data = moment(full.created_at).format('DD-MM-YYYY hh:mm:ss');
+						
+						if (full.created_at == null) {
+							return null
+						}
+                        return data;
+                    }
+				},
+				{
 		       		"targets": 4,
 		            "data": "id",
                     "width": "10%",
@@ -138,6 +150,18 @@ var table = {
                         return data;
                     }
                 },
+				{
+					"targets": 3,
+		            "data": "created_at",
+		            "render": function(data, type, full, meta){
+                        var data = moment(full.created_at).format('DD-MM-YYYY hh:mm:ss');
+
+                        if (full.created_at == null) {
+							return null
+						}
+                        return data;
+                    }
+				},
 				{
 		       		"targets": 4,
 		            "data": "id",
