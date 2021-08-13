@@ -6,6 +6,7 @@ use App\Http\Controllers\Security\EncryptController;
 use App\Http\Controllers\Security\ValidatorController;
 use App\Menu;
 use App\SubMenu;
+use App\Article;
 
 use Request;
 use Crypt;
@@ -171,12 +172,13 @@ class MenuController extends Controller
         $id = Crypt::decryptString($id);
 
         $sub_menu = SubMenu::where('id', $id)->first()->toArray();
+        $deleteArticle = Article::where('sub_menu_id', $sub_menu['id'])->delete();
         if ($sub_menu['is_child'] == 0) {
-            $menu = Menu::where('id', $sub_menu['menu_id'])->delete();
             $delete = SubMenu::where('menu_id', $sub_menu['menu_id'])->delete();
         } else {
             $delete = SubMenu::where('id', $id)->delete();
         }
+        $menu = Menu::where('id', $sub_menu['menu_id'])->delete();
         
         
         if ($delete) {

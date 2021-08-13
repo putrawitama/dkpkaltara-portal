@@ -22,6 +22,7 @@
                         <th>Title</th>
                         <th>Description</th>
                         <th>Publish</th>
+                        <th>Type</th>
                         <th>Action</th>
                     </tr>
                 </thead>

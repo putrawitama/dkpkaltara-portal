@@ -401,6 +401,18 @@ function readFileImageMore(input) {
 }
 
 if ($('#formAddGallery').length) {
+	$("#videos").hide()
+	$("#customSwitch2").change(function(){
+		if (this.checked) {
+			console.log('true');
+			$("#videos").show()
+			$("#images").hide()
+		} else {
+			console.log('false');
+			$("#videos").hide()
+			$("#images").show()
+		}
+	})
     $(".imageMore").change(function(){
         readFileImageMore(this);
     })

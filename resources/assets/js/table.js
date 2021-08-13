@@ -5,6 +5,7 @@ var table = {
 				{'data':'title'},
 				{'data':'desc', 'orderable': false,},
 				{'data':'publish'},
+				{'data':'type'},
                 {'data':null},
 			];
 
@@ -23,7 +24,7 @@ var table = {
                     }
                 },
 				{
-		       		"targets": 3,
+		       		"targets": 4,
 		            "data": "id",
                     "width": "10%",
                     "orderable": false,
@@ -41,9 +42,6 @@ var table = {
                         }
 						
 						var data = '<div class="d-flex">'+
-                                        '<a href="/gallery/edit/'+full.link_id+'" class="btn btn-primary btn-circle btn-sm btn-action mx-1" title="Edit">'+
-                                            '<i class="fas fa-eye fa-sm"></i>'+
-                                        '</a>'+
                                         toggle+
                                         '<a href="/gallery/delete/'+full.link_id+'" class="btn btn-primary btn-circle btn-sm btn-action mx-1" title="Delete">'+
                                             '<i class="fas fa-trash-alt fa-sm"></i>'+
@@ -312,7 +310,6 @@ var table = {
 	},
 	serverSide:function(id,columns,url,custParam=null,columnDefs=null){
 		var urutan = [0, 'desc'];
-
 		var search = true;
 		var bLength = true;
 		var bInfo = true;

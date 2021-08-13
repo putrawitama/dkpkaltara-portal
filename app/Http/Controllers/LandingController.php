@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Security\EncryptController;
+use App\Http\Controllers\Security\ValidatorController;
+
+use Request;
+use Crypt;
 use App\Article;
 use App\Menu;
 use App\SubMenu;
 use App\Gallery;
+use Http;
 
 class LandingController extends Controller
 {
@@ -14,12 +19,16 @@ class LandingController extends Controller
 
     public function home()
     {
+        $response = Http::get('https://www.instagram.com/dkp.kaltara/?__a=1');
+        $data = $response->json();
+        $latestPost = $data["graphql"]["user"]["edge_owner_to_timeline_media"]["edges"][0]["node"]["shortcode"];
         $menu = Menu::with('subMenu')->get();
         $article = Article::where('publish', 1)->with('subMenu')->latest()->take(10)->get();
         return view('landing.landing')->with([
             'navbar' => 'home',
             'menu' => $menu,
-            'article' => $article
+            'article' => $article,
+            'latestIg' => $latestPost
         ]);
     }
 
@@ -59,14 +68,64 @@ class LandingController extends Controller
         return view('landing.list')->with($data);
     }
 
-    public function listGallery()
+    public function detailGallery($type, $id = null)
     {
-        # code...
+
+        if (!($type === 'video' || $type === 'photo')) {
+            abort(404);
+        }
+
+        $menus = Menu::with('subMenu')->get();
+        $data = [
+            'menu'=> $menus,
+            'type' => $type,
+            'is_detail' => $id === null ? false : true
+        ];
+
+        if ($id === null) {
+            if ($type === 'video') {
+                $galleries = Gallery::where('type', 1)->where('publish', 1)->latest()->get();
+            } else {
+                $galleries = Gallery::where('type', 0)->where('publish', 1)->latest()->get();
+            }
+
+            $data['list'] = $galleries;
+        } else {
+            $gallery = Gallery::where('id', $id)->where('publish', 1)->first();
+
+            if ($gallery === null) {
+                abort(404);
+            }
+            $data['detail'] = $gallery;
+        }
+
+        return view('landing.gallery')->with($data);
     }
 
-    public function detailGallery($id)
+    public function contactUs()
     {
-        # code...
+        $menu = Menu::with('subMenu')->get();
+        return view('landing.contact')->with([
+            'menu' => $menu
+        ]);
+    }
+
+    public function postContact()
+    {
+
+        $data = Request::all();
+
+        $details = [
+            'subject' => $data['subject'],
+            'content' => $data['message'],
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'phone' => $data['phone'],
+        ];
+       
+        \Mail::to('dkp@kaltaraprov.go.id')->send(new \App\Mail\ContactMail($details));
+
+        return redirect('/kontak')->with('notif', 'Pesan Telah Terkirim');
     }
 
 

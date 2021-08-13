@@ -24,12 +24,12 @@
         Managements
     </div>
     
-    <!-- <li class="nav-item {{ $sidebar == 'gallery' ? 'active' : '' }}">
-        <a class="nav-link" href="">
+    <li class="nav-item {{ $sidebar == 'gallery' ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('get.list-gallery') }}">
             <i class="fas fa-fw fa-images"></i>
             <span>Manage Gallery</span>
         </a>
-    </li> -->
+    </li>
 
     <li class="nav-item {{ $sidebar == 'menu' ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('get.list-menu') }}">

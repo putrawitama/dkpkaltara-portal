@@ -79,23 +79,44 @@ class GalleryController extends Controller
         $data = $encrypt->fnDecrypt(Request::input('data'),true);
 
         $path = [];
-        if (Request::has('image')) {
-            $image = Request::file('image');
-            
-            for ($i=0; $i < count($image); $i++) {
-                $ext = $image[$i]->getClientOriginalExtension();
-                $path_path = $image[$i]->storeAs('uploads', 'image_gallery_'.time().$i.'.'.$ext, 'public');
-
-                array_push($path, $path_path);
+        if (isset($data['isVideo']) && $data['isVideo'] == 1) {
+            if (Request::has('video')) {
+                $video = Request::file('video');
+                
+                for ($i=0; $i < count($video); $i++) {
+                    $ext = $video[$i]->getClientOriginalExtension();
+                    $path_path = $video[$i]->storeAs('uploads', 'video_gallery_'.time().$i.'.'.$ext, 'public');
+    
+                    array_push($path, $path_path);
+                }
+            } else {
+                $messages = [
+                    'status' => 'error',
+                    'message' => 'Input images require',
+                    'url' => 'close'
+                ];
+    
+                return back()->with('notif', $messages);
             }
         } else {
-            $messages = [
-                'status' => 'error',
-                'message' => 'Input images require',
-                'url' => 'close'
-            ];
-
-            return back()->with('notif', $messages);
+            if (Request::has('image')) {
+                $image = Request::file('image');
+                
+                for ($i=0; $i < count($image); $i++) {
+                    $ext = $image[$i]->getClientOriginalExtension();
+                    $path_path = $image[$i]->storeAs('uploads', 'image_gallery_'.time().$i.'.'.$ext, 'public');
+    
+                    array_push($path, $path_path);
+                }
+            } else {
+                $messages = [
+                    'status' => 'error',
+                    'message' => 'Input images require',
+                    'url' => 'close'
+                ];
+    
+                return back()->with('notif', $messages);
+            }
         }
 
         $insert = new Gallery;
@@ -103,6 +124,9 @@ class GalleryController extends Controller
         $insert->desc = $data['desc'];
         if (isset($data['publish']) && $data['publish'] == 1) {
             $insert->publish = $data['publish'];
+        }
+        if (isset($data['isVideo']) && $data['isVideo'] == 1) {
+            $insert->type = $data['isVideo'];
         }
         $insert->images = json_encode($path);
         $insert->save();

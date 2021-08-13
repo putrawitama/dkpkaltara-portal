@@ -16,18 +16,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('authuser')->group(function(){
     Route::get('/dashboard', 'HomeController@index')->name('home');
 
-    Route::prefix('gallery')->group(function () {
-        Route::get('/', 'GalleryController@index')->name('get.list-gallery');
-        Route::post('/list', 'GalleryController@list')->name('post.list-gallery');
-        Route::get('/add', 'GalleryController@add')->name('get.add-gallery');
-        Route::post('/store', 'GalleryController@store')->name('post.store-gallery');
-        Route::get('/edit/{id}', 'GalleryController@edit')->name('get.edit-gallery');
-        Route::post('/update', 'GalleryController@update')->name('post.update-gallery');
-        Route::get('/publish/{id}', 'GalleryController@publish')->name('post.publish-gallery');
-        Route::get('/unpublish/{id}', 'GalleryController@unpublish')->name('post.unpublish-gallery');
-        Route::get('/delete/{id}', 'GalleryController@delete')->name('post.delete-gallery');
-    });
-
     Route::prefix('article')->group(function () {
         Route::get('/', 'ArticleController@index')->name('get.list-article');
         Route::post('/list', 'ArticleController@list')->name('post.list-article');
@@ -49,12 +37,25 @@ Route::middleware('authuser')->group(function(){
         Route::post('/update', 'MenuController@update')->name('post.update-menu');
         Route::get('/delete/{id}', 'MenuController@delete')->name('post.delete-menu');
     });
+
+    Route::prefix('gallery')->group(function () {
+        Route::get('/', 'GalleryController@index')->name('get.list-gallery');
+        Route::post('/list', 'GalleryController@list')->name('post.list-gallery');
+        Route::get('/add', 'GalleryController@add')->name('get.add-gallery');
+        Route::post('/store', 'GalleryController@store')->name('post.store-gallery');
+        Route::get('/edit/{id}', 'GalleryController@edit')->name('get.edit-gallery');
+        Route::post('/update', 'GalleryController@update')->name('post.update-gallery');
+        Route::get('/publish/{id}', 'GalleryController@publish')->name('post.publish-gallery');
+        Route::get('/unpublish/{id}', 'GalleryController@unpublish')->name('post.unpublish-gallery');
+        Route::get('/delete/{id}', 'GalleryController@delete')->name('post.delete-gallery');
+    });
 });
 
 Route::get('/', 'LandingController@home')->name('landing.main');
 Route::get('/page/{menu}/{article?}', 'LandingController@listArticleByMenu')->name('landing.detail');
-Route::get('/gallery', 'LandingController@listGallery')->name('landing.gallery');
-Route::get('/gallery/{id}', 'LandingController@detailGallery')->name('landing.gallery.detail');
+Route::get('/kontak', 'LandingController@contactUs')->name('landing.contact');
+Route::post('/kontak-post', 'LandingController@postContact')->name('landing.contact-post');
+Route::get('/galeri/{type}/{id?}', 'LandingController@detailGallery')->name('landing.gallery.detail');
 
 // Login
 Route::get('/login', 'LoginController@viewLogin')->name('get.login');
