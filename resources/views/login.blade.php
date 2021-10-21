@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Security-Policy" content="img-src * 'self' data: https:; default-src *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'" />
     <meta charset="UTF-8">
-    <meta name="base" content="http://localhost:8001" />
+    <meta name="base" content="https://dkp.kaltaraprov.go.id" />
     <meta name="baseImage" content="{{ url('storage') }}" />
     <meta name="csrf-token" content="{{csrf_token()}}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

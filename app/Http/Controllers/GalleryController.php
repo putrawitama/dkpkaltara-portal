@@ -169,23 +169,34 @@ class GalleryController extends Controller
         $data = $encrypt->fnDecrypt(Request::input('data'),true);
 
         $path = [];
-        if (isset($data['imgReview'])) {
-            if (!is_array($data['imgReview'])) {
-                $path[0] = $data['imgReview'];
-            } else {
-                $path = array_merge($path, $data['imgReview']);
+        if (Request::has('video')) {
+            $video = Request::file('video');
+            
+            for ($i=0; $i < count($video); $i++) {
+                $ext = $video[$i]->getClientOriginalExtension();
+                $path_path = $video[$i]->storeAs('uploads', 'video_gallery_'.time().$i.'.'.$ext, 'public');
+
+                array_push($path, $path_path);
             }
-        }
-
-        if (Request::has('image')) {
-            $image = Request::file('image');
-
-            foreach ($image as $key => $value) {
-                unset($path[$key]);
-                $ext = $value->getClientOriginalExtension();
-                $path_path = $value->storeAs('uploads', 'image_gallery_'.time().$key.'.'.$ext, 'public');
-
-                $path[$key] = $path_path;
+        } else {
+            if (isset($data['imgReview'])) {
+                if (!is_array($data['imgReview'])) {
+                    $path[0] = $data['imgReview'];
+                } else {
+                    $path = array_merge($path, $data['imgReview']);
+                }
+            }
+    
+            if (Request::has('image')) {
+                $image = Request::file('image');
+    
+                foreach ($image as $key => $value) {
+                    unset($path[$key]);
+                    $ext = $value->getClientOriginalExtension();
+                    $path_path = $value->storeAs('uploads', 'image_gallery_'.time().$key.'.'.$ext, 'public');
+    
+                    $path[$key] = $path_path;
+                }
             }
         }
 

@@ -24,6 +24,19 @@ var table = {
                     }
                 },
 				{
+                    "targets": 3,
+		            "data": "type",
+                    "orderable": false,
+		            "render": function(data, type, full, meta){
+                        var data = 'Photo';
+                        if (full.type == 1) {
+                            data = 'Video';
+                        }
+
+                        return data;
+                    }
+                },
+				{
 		       		"targets": 4,
 		            "data": "id",
                     "width": "10%",
@@ -42,6 +55,9 @@ var table = {
                         }
 						
 						var data = '<div class="d-flex">'+
+										'<a href="/gallery/edit/'+full.link_id+'" class="btn btn-primary btn-circle btn-sm btn-action mx-1" title="Edit">'+
+                                            '<i class="fas fa-pencil-alt fa-sm"></i>'+
+                                        '</a>'+
                                         toggle+
                                         '<a href="/gallery/delete/'+full.link_id+'" class="btn btn-primary btn-circle btn-sm btn-action mx-1" title="Delete">'+
                                             '<i class="fas fa-trash-alt fa-sm"></i>'+
@@ -183,6 +199,129 @@ var table = {
 	        ];
 
 			table.serverSide('tableMenu',column,'menu/list',null,columnDefs)
+		}
+		if ($('#tableInbox').length) {
+			var column = [
+				{'data':'created_at'},
+				{'data':'subject'},
+				{'data':'name',},
+				{'data':'email'},
+				{'data':'phone'},
+				{'data':'is_responded'},
+                {'data':null},
+			];
+
+			columnDefs = [
+				{
+					"targets": 0,
+		            "data": "created_at",
+		            "render": function(data, type, full, meta){
+                        var data = moment(full.created_at).format('DD-MM-YYYY hh:mm:ss');
+
+                        if (full.created_at == null) {
+							return null
+						}
+                        return data;
+                    }
+				},
+                {
+                    "targets": 5,
+		            "data": "is_responded",
+                    "orderable": false,
+		            "render": function(data, type, full, meta){
+                        var data = 'New';
+                        if (full.is_responded == 1) {
+                            data = 'Responded';
+                        }
+
+                        return data;
+                    }
+                },
+				{
+		       		"targets": 6,
+		            "data": "id",
+                    "width": "10%",
+                    "orderable": false,
+		            "render": function(data, type, full, meta){
+                        var id = encodeURIComponent(window.btoa(full.id));
+
+                        if (full.is_responded == 0) {
+                            var toggle = '<a href="/mail/responded/'+full.link_id+'" class="btn btn-primary btn-circle btn-sm btn-action mx-1" title="Tandai Sudah direspon">'+
+                                            '<i class="fas fa-paper-plane fa-sm"></i>'+
+                                        '</a>';
+                        } else {
+                            var toggle = '';
+                        }
+						
+						var data = '<div class="d-flex">'+
+										'<a href="/mail/detail/'+full.link_id+'" class="btn btn-primary btn-circle btn-sm btn-action mx-1" title="Detail">'+
+                                            '<i class="fas fa-eye fa-sm"></i>'+
+                                        '</a>'+
+                                        toggle+
+                                    '</div>';
+                        
+		              	return data;
+		           	}
+		        }
+	        ];
+
+			table.serverSide('tableInbox',column,'mail/list',null,columnDefs)
+		}
+		if ($('#tableExternal').length) {
+			var column = [
+				{'data':'title'},
+				{'data':'link',},
+				{'data':'image'},
+				{'data':'created_at'},
+                {'data':null},
+			];
+
+			columnDefs = [
+				{
+					"targets": 3,
+		            "data": "created_at",
+		            "render": function(data, type, full, meta){
+                        var data = moment(full.created_at).format('DD-MM-YYYY hh:mm:ss');
+
+                        if (full.created_at == null) {
+							return null
+						}
+                        return data;
+                    }
+				},
+				{
+					"targets": 2,
+		            "data": "image",
+					"orderable": false,
+		            "render": function(data, type, full, meta){
+                        var data = '<img class="w-100" src="/storage/'+JSON.parse(full.image)[0]+'" alt="First slide">';
+
+                        return data;
+                    }
+				},
+				{
+		       		"targets": 4,
+		            "data": "id",
+                    "width": "10%",
+                    "orderable": false,
+		            "render": function(data, type, full, meta){
+                        var id = encodeURIComponent(window.btoa(full.id));
+
+                        var data = '<div class="d-flex">'+
+                                        '<a href="/external/edit/'+full.link_id+'" class="btn btn-primary btn-circle btn-sm btn-action mx-1" title="Edit">'+
+                                            '<i class="fas fa-pencil-alt fa-sm"></i>'+
+                                        '</a>'+
+                                        '<a href="/external/delete/'+full.link_id+'" class="btn btn-primary btn-circle btn-sm btn-action mx-1" title="Delete">'+
+                                            '<i class="fas fa-trash-alt fa-sm"></i>'+
+                                        '</a>'
+                                    '</div>';
+                        
+		              	return data;
+		           	}
+		        }
+	        ];
+
+			table.serverSide('tableExternal',column,'external/list',null,columnDefs)
 		}
 	},
 	filter:function(id,value){

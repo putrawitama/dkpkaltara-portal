@@ -37,6 +37,13 @@
             <span>Manage Menu</span>
         </a>
     </li>
+
+    <li class="nav-item {{ $sidebar == 'external' ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('get.list-external') }}">
+            <i class="fas fa-fw fa-link"></i>
+            <span>Manage External Link</span>
+        </a>
+    </li>
     
     <!-- Divider -->
     <hr class="sidebar-divider">
@@ -45,10 +52,23 @@
         Articles
     </div>
     <!-- Nav Item - Charts -->
-    <li class="nav-item {{ $sidebar == 'jobs' ? 'active' : '' }}">
+    <li class="nav-item {{ $sidebar == 'article' ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('get.list-article') }}">
             <i class="fas fa-fw fa-handshake"></i>
             <span>Manage Article</span>
+        </a>
+    </li>
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        Mails
+    </div>
+    <!-- Nav Item - Charts -->
+    <li class="nav-item {{ $sidebar == 'mail' ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('get.list-mail') }}">
+            <i class="fas fa-fw fa-inbox"></i>
+            <span>Manage Inbox</span>
         </a>
     </li>
     <!-- Nav Item - Tables -->

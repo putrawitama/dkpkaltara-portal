@@ -52,36 +52,53 @@
                             </div>
                         </div>
                     </div>
+                    @if($detail['type'] == 1)
+                        <div class="row">
+                            <div class="col-lg-10 col-md-12">
+                                <div class="form-group">
+                                    <label for="exampleFormControlFile1">Choose video <small class="text-danger">*Max 64MB, file mp4</small></label>
+                                    <input type="file" class="form-control-file" id="exampleFormControlFile1" name="video[]" id="video" accept="video/mp4">
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
             <hr>
-            <div class="row mb-4">
-                <div class="col-lg-6 col-md-12">
-                    <button type="button" class="btn btn-primary btn-add-gallery">
-                        <i class="fas fa-plus"></i> Add Image
-                    </button>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-11 col-md-12">
-                    <div id="listGallery" class="d-flex flex-wrap">
-                        @for ($i = 0; $i < count($detail['images']); $i++)
-                        <div class="form-group mx-2" id="uploadGambar">
-                            <input type="hidden" name="imgReview[]" value="{{ $detail['images'][$i] }}">
-                            <div class="custom-file-multiple" style="background-image:url({{ url('storage').'/'.$detail['images'][$i] }})">
-                                <input type="file" class="custom-file-input imageMore" name="image[]" id="image" accept=".jpg, .png, .jpeg">
-                                <label class="custom-file-label" for="image">
-                                    <button type="button" class="btn-remove-image-exist">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </label>
-                                <!-- <span><i class="fas fa-images"></i></span> -->
-                            </div>
-                        </div>
-                        @endfor
+            @if($detail['type'] == 0)
+                <div class="row mb-4">
+                    <div class="col-lg-6 col-md-12">
+                        <button type="button" class="btn btn-primary btn-add-gallery">
+                            <i class="fas fa-plus"></i> Add Image
+                        </button>
                     </div>
                 </div>
-            </div>
+                <div class="row">
+                    <div class="col-lg-11 col-md-12">
+                        <div id="listGallery" class="d-flex flex-wrap">
+                            @for ($i = 0; $i < count($detail['images']); $i++)
+                            <div class="form-group mx-2" id="uploadGambar">
+                                <input type="hidden" name="imgReview[]" value="{{ $detail['images'][$i] }}">
+                                <div class="custom-file-multiple" style="background-image:url({{ url('storage').'/'.$detail['images'][$i] }})">
+                                    <input type="file" class="custom-file-input imageMore" name="image[]" id="image" accept=".jpg, .png, .jpeg">
+                                    <label class="custom-file-label" for="image">
+                                        <button type="button" class="btn-remove-image-exist">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </label>
+                                    <!-- <span><i class="fas fa-images"></i></span> -->
+                                </div>
+                            </div>
+                            @endfor
+                        </div>
+                    </div>
+                </div>
+            @else
+                <video class="card-img-top w-100" controls>
+                    <source src="{{ url('storage').'/'.$detail['images'][0] }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            @endif
             <div class="row mt-4">
                 <div class="col-12">
                     <button type="submit" class="btn btn-primary px-4">Submit</button>

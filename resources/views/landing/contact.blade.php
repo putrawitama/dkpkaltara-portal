@@ -9,20 +9,20 @@
             @csrf
             <div class="form-group">
                 <label for="inputAddress">Subject</label>
-                <input type="text" name="subject" class="form-control" id="inputSubject" placeholder="Subject">
+                <input type="text" name="subject" class="form-control" id="inputSubject" placeholder="Subject" required>
             </div>
             <div class="form-group">
                 <label for="inputAddress">Name</label>
-                <input type="text" name="name" class="form-control" id="inputName" placeholder="John Doe">
+                <input type="text" name="name" class="form-control" id="inputName" placeholder="John Doe" required>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="inputEmail4">Email</label>
-                    <input type="email" name="email"  class="form-control" id="inputEmail" placeholder="Email">
+                    <input type="email" name="email"  class="form-control" id="inputEmail" placeholder="Email" required>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="inputPassword4">Telepon</label>
-                    <input type="input" name="phone"  class="form-control" id="inputPhone" placeholder="Nomor Telepon">
+                    <input type="input" name="phone"  class="form-control" id="inputPhone" placeholder="Nomor Telepon" required>
                 </div>
             </div>
             <div class="form-group">

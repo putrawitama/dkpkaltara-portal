@@ -8,15 +8,18 @@
         @if($is_detail)
             <p>Diunggah pada {{ $detail->created_at }}</p>
             <h3 class=" mb-2 font-weight-bold mb-4" style="color: #004385">{{ $detail->title }}</h3>
+            {!! $detail->desc !!}
             @if($type === 'photo')
-                <img class="d-block w-100 mb-4" src="{{ url('storage').'/'.json_decode($detail->images)[0] }}" alt="First slide">
+                @php $images = json_decode($detail->images); @endphp
+                @foreach($images as $img)
+                    <img class="d-block w-100 mb-4" src="{{ url('storage').'/'.$img }}" alt="First slide">
+                @endforeach
             @else
                 <video class="card-img-top w-100" controls>
                     <source src="{{ url('storage').'/'.json_decode($detail->images)[0] }}" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
             @endif
-            {!! $detail->desc !!}
             <div class="fb-comments w-100 mt-5" data-href="{{ Request::url() }}" data-width="auto" data-numposts="5"></div>
         @else
             <h3 class=" mb-5 font-weight-bold" style="color: #004385">Daftar Galeri {{ $type === 'video' ? 'Video' : 'Foto' }}</h3>

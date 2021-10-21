@@ -1,7 +1,33 @@
 @extends('landing.main')
 @section('content')
 <div class="container mb-5">
-    <div class="row">
+<div class="row mx-auto my-auto">
+        <div id="recipeCarousel" class="carousel slide w-100" data-ride="carousel">
+            <div class="carousel-inner carousel-inner-link w-100" role="listbox">
+                @foreach($link as $key => $d)
+                <div class="carousel-item carousel-link {{ $key === 0 ? 'active' : '' }}">
+                    <div class="col-md-3">
+                        <a href="{{ $d->link }}">
+                            <div class="card">
+                                <img class="card-img" src="{{ url('storage').'/'.json_decode($d->image)[0] }}">
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                @endforeach
+                
+            </div>
+            <a class="carousel-control-prev w-auto" href="#recipeCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon bg-dark border border-dark rounded-circle" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next w-auto" href="#recipeCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon bg-dark border border-dark rounded-circle" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+    <!-- <div class="row">
         <div class="col-sm">
             <a href="http://sidaracantik.kaltaraprov.go.id/">
                 <img src="{{ asset('img/logo/sidara.png') }}" class="w-100" alt="" srcset="">
@@ -27,7 +53,7 @@
                 <img src="{{ asset('img/logo/ppid.jpg') }}" class="w-100" alt="" srcset="">
             </a>
         </div>
-    </div>
+    </div> -->
     <div class="row mt-5">
         <div class="col-md-8">
             <hr style="border-color: #004385">

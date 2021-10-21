@@ -11,6 +11,7 @@ use App\Article;
 use App\Menu;
 use App\SubMenu;
 use App\Gallery;
+use App\External;
 use Http;
 
 class LandingController extends Controller
@@ -21,14 +22,17 @@ class LandingController extends Controller
     {
         $response = Http::get('https://www.instagram.com/dkp.kaltara/?__a=1');
         $data = $response->json();
+
         $latestPost = $data["graphql"]["user"]["edge_owner_to_timeline_media"]["edges"][0]["node"]["shortcode"];
         $menu = Menu::with('subMenu')->get();
+        $link = External::all();
         $article = Article::where('publish', 1)->with('subMenu')->latest()->take(10)->get();
         return view('landing.landing')->with([
             'navbar' => 'home',
             'menu' => $menu,
             'article' => $article,
-            'latestIg' => $latestPost
+            'link' => $link,
+            'latestIg' => 'CSax6m3nHd9'
         ]);
     }
 

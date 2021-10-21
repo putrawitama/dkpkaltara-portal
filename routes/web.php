@@ -28,6 +28,23 @@ Route::middleware('authuser')->group(function(){
         Route::get('/delete/{id}', 'ArticleController@delete')->name('post.delete-article');
     });
 
+    Route::prefix('external')->group(function () {
+        Route::get('/', 'ExternalController@index')->name('get.list-external');
+        Route::post('/list', 'ExternalController@list')->name('post.list-external');
+        Route::get('/add', 'ExternalController@add')->name('get.add-external');
+        Route::post('/store', 'ExternalController@store')->name('post.store-external');
+        Route::get('/edit/{id}', 'ExternalController@edit')->name('get.edit-external');
+        Route::post('/update', 'ExternalController@update')->name('post.update-external');
+        Route::get('/delete/{id}', 'ExternalController@delete')->name('post.delete-external');
+    });
+
+    Route::prefix('mail')->group(function () {
+        Route::get('/', 'MailController@index')->name('get.list-mail');
+        Route::post('/list', 'MailController@list')->name('post.list-mail');
+        Route::get('/detail/{id}', 'MailController@detail')->name('get.detail-mail');
+        Route::get('/responded/{id}', 'MailController@responded')->name('post.responded-mail');
+    });
+
     Route::prefix('menu')->group(function () {
         Route::get('/', 'MenuController@index')->name('get.list-menu');
         Route::post('/list', 'MenuController@list')->name('post.list-menu');
@@ -53,8 +70,8 @@ Route::middleware('authuser')->group(function(){
 
 Route::get('/', 'LandingController@home')->name('landing.main');
 Route::get('/page/{menu}/{article?}', 'LandingController@listArticleByMenu')->name('landing.detail');
-Route::get('/kontak', 'LandingController@contactUs')->name('landing.contact');
-Route::post('/kontak-post', 'LandingController@postContact')->name('landing.contact-post');
+Route::get('/kontak', 'MailController@contactUs')->name('landing.contact');
+Route::post('/kontak-post', 'MailController@postContact')->name('landing.contact-post');
 Route::get('/galeri/{type}/{id?}', 'LandingController@detailGallery')->name('landing.gallery.detail');
 
 // Login

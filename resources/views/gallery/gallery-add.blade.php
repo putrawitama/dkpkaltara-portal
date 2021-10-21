@@ -73,14 +73,27 @@
                 </div>
             </div>
             <hr>
-            <div class="row" id="images">
-                <div class="col-lg-11 col-md-12">
-                    <p class="lead">Choose Photo</p>
-                    <div id="listGallery" class="d-flex flex-wrap">
-                        <div class="form-group mx-2" id="uploadGambar">
-                            <div class="custom-file-multiple">
-                                <input type="file" class="custom-file-input imageMore" name="image[]" id="image" accept=".jpg, .png, .jpeg">
-                                <span><i class="fas fa-images"></i></span>
+            <div id="images">
+                <div class="row mb-4">
+                    <div class="col-lg-6 col-md-12">
+                        <button type="button" class="btn btn-primary btn-add-gallery">
+                            <i class="fas fa-plus"></i> Add Image
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-11 col-md-12">
+                        <div id="listGallery" class="d-flex flex-wrap">
+                            <div class="form-group mx-2" id="uploadGambar">
+                                <div class="custom-file-multiple">
+                                    <input type="file" class="custom-file-input imageMore" name="image[]" id="image" accept=".jpg, .png, .jpeg">
+                                    <label class="custom-file-label" for="image">
+                                        <button type="button" class="btn-remove-image">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </label>
+                                    <span><i class="fas fa-images"></i></span>
+                                </div>
                             </div>
                         </div>
                     </div>

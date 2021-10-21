@@ -444,6 +444,25 @@ if ($('#formAddGallery').length) {
     })
 }
 if ($('#formEditGallery').length) {
+	if ($('#customSwitch2').is(":checked")){
+		$("#videos").show()
+		$("#images").hide()
+	} else {
+		$("#videos").hide()
+		$("#images").show()
+	}
+
+	$("#customSwitch2").change(function(){
+		if (this.checked) {
+			console.log('true');
+			$("#videos").show()
+			$("#images").hide()
+		} else {
+			console.log('false');
+			$("#videos").hide()
+			$("#images").show()
+		}
+	})
     $(".imageMore").change(function(){
         readFileImageMore(this);
     })
@@ -489,6 +508,18 @@ if ($('#formAddArticle').length) {
 }
 
 if ($('#formEditArticle').length) {
+    $(".imageMore").change(function(){
+        readFileImageMore(this);
+    })
+}
+
+if ($('#formAddExternal').length) {
+    $(".imageMore").change(function(){
+        readFileImageMore(this);
+    })
+}
+
+if ($('#formEditExternal').length) {
     $(".imageMore").change(function(){
         readFileImageMore(this);
     })
