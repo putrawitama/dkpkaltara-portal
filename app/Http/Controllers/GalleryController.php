@@ -205,6 +205,8 @@ class GalleryController extends Controller
         $update->desc = $data['desc'];
         if (isset($data['publish']) && $data['publish'] == 1) {
             $update->publish = $data['publish'];
+        } else {
+            $update->publish = 0;
         }
         $update->images = json_encode(array_values($path));
         $update->save();

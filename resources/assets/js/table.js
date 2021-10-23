@@ -294,7 +294,7 @@ var table = {
 		            "data": "image",
 					"orderable": false,
 		            "render": function(data, type, full, meta){
-                        var data = '<img class="w-100" src="/storage/'+JSON.parse(full.image)[0]+'" alt="First slide">';
+                        var data = '<img class="img-thumbnail" style="width:200px" src="/storage/'+JSON.parse(full.image)[0]+'" alt="First slide">';
 
                         return data;
                     }
@@ -322,6 +322,87 @@ var table = {
 	        ];
 
 			table.serverSide('tableExternal',column,'external/list',null,columnDefs)
+		}
+		if ($('#tableAdsense').length) {
+			var column = [
+				{'data':'title'},
+				{'data':'link',},
+				{'data':'image'},
+				{'data':'publish'},
+				{'data':'created_at'},
+                {'data':null},
+			];
+
+			columnDefs = [
+				{
+                    "targets": 3,
+		            "data": "publish",
+                    "orderable": false,
+		            "render": function(data, type, full, meta){
+                        var data = 'Unpublish';
+                        if (full.publish == 1) {
+                            data = 'Published';
+                        }
+
+                        return data;
+                    }
+                },
+				{
+					"targets": 4,
+		            "data": "created_at",
+		            "render": function(data, type, full, meta){
+                        var data = moment(full.created_at).format('DD-MM-YYYY hh:mm:ss');
+
+                        if (full.created_at == null) {
+							return null
+						}
+                        return data;
+                    }
+				},
+				{
+					"targets": 2,
+		            "data": "image",
+					"orderable": false,
+		            "render": function(data, type, full, meta){
+                        var data = '<img class="img-thumbnail" style="width:200px" src="/storage/'+JSON.parse(full.image)[0]+'" alt="First slide">';
+
+                        return data;
+                    }
+				},
+				{
+		       		"targets": 5,
+		            "data": "id",
+                    "width": "10%",
+                    "orderable": false,
+		            "render": function(data, type, full, meta){
+                        var id = encodeURIComponent(window.btoa(full.id));
+
+						if (full.publish == 1) {
+                            var toggle = '<a href="/adsense/unpublish/'+full.link_id+'" class="btn btn-primary btn-circle btn-sm btn-action mx-1" title="Unpublish">'+
+                                            '<i class="fas fa-cloud-download-alt fa-sm"></i>'+
+                                        '</a>';
+                        } else {
+                            var toggle = '<a href="/adsense/publish/'+full.link_id+'" class="btn btn-primary btn-circle btn-sm btn-action mx-1" title="Publish">'+
+                                            '<i class="fas fa-cloud-upload-alt fa-sm"></i>'+
+                                        '</a>';
+                        }
+
+                        var data = '<div class="d-flex">'+
+                                        '<a href="/adsense/edit/'+full.link_id+'" class="btn btn-primary btn-circle btn-sm btn-action mx-1" title="Edit">'+
+                                            '<i class="fas fa-pencil-alt fa-sm"></i>'+
+                                        '</a>'+
+										toggle+
+                                        '<a href="/adsense/delete/'+full.link_id+'" class="btn btn-primary btn-circle btn-sm btn-action mx-1" title="Delete">'+
+                                            '<i class="fas fa-trash-alt fa-sm"></i>'+
+                                        '</a>'
+                                    '</div>';
+                        
+		              	return data;
+		           	}
+		        }
+	        ];
+
+			table.serverSide('tableAdsense',column,'adsense/list',null,columnDefs)
 		}
 	},
 	filter:function(id,value){

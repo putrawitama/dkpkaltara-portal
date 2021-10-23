@@ -4,20 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Security\EncryptController;
 use App\Http\Controllers\Security\ValidatorController;
-use App\Article;
-use App\Menu;
-use App\SubMenu;
+use App\Adsense;
 
 use Request;
 use Crypt;
 
-class ArticleController extends Controller
+class AdsenseController extends Controller
 {
     public function index() {
-        return view('article.article-list')->with([
-            'pageTitle' => 'Manage Article', 
-            'title' => 'List Article', 
-            'sidebar' => 'article'
+        return view('adsense.adsense-list')->with([
+            'pageTitle' => 'Manage Adsense Link', 
+            'title' => 'List Adsense', 
+            'sidebar' => 'adsense'
         ]);
     }
 
@@ -30,19 +28,19 @@ class ArticleController extends Controller
             'sort' => (!empty(Request::get('order')[0]['dir'])) ? Request::get('order')[0]['dir'] : '',
         );
         
-        $article = new Article;
+        $adsense = new adsense;
         
         if ($dataSend['search']){
-            $article = $article->where('title','like','%'.$dataSend['search'].'%');
+            $adsense = $adsense->where('title','like','%'.$dataSend['search'].'%');
         }
-        $count = $article->count();
+        $count = $adsense->count();
 
-        $list = $article->skip(intval( $dataSend["offset"]))->take(intval($dataSend["limit"]));
+        $list = $adsense->skip(intval( $dataSend["offset"]))->take(intval($dataSend["limit"]));
 
         if ($dataSend["order"]) {
-            $list = $list->orderBy($dataSend["order"], $dataSend["sort"])->with('subMenu')->get()->toArray();
+            $list = $list->orderBy($dataSend["order"], $dataSend["sort"])->get()->toArray();
         } else {
-            $list = $list->orderBy('created_at', $dataSend["sort"])->with('subMenu')->get()->toArray();
+            $list = $list->orderBy('created_at', $dataSend["sort"])->get()->toArray();
         }
 
         for ($i=0; $i < count($list); $i++) { 
@@ -70,12 +68,10 @@ class ArticleController extends Controller
 
     public function add() {
 
-        $menu = SubMenu::all()->toArray();
-        return view('article.article-add')->with([
-            'pageTitle' => 'Manage Article', 
-            'title' => 'Add Article', 
-            'sidebar' => 'article',
-            'menu' => $menu
+        return view('adsense.adsense-add')->with([
+            'pageTitle' => 'Manage Adsense Link', 
+            'title' => 'Add Adsense Link', 
+            'sidebar' => 'adsense',
         ]);
     }
 
@@ -89,7 +85,7 @@ class ArticleController extends Controller
             
             for ($i=0; $i < count($image); $i++) {
                 $ext = $image[$i]->getClientOriginalExtension();
-                $path_path = $image[$i]->storeAs('uploads', 'image_article_'.time().$i.'.'.$ext, 'public');
+                $path_path = $image[$i]->storeAs('uploads', 'image_adsense_'.time().$i.'.'.$ext, 'public');
 
                 array_push($path, $path_path);
             }
@@ -103,31 +99,28 @@ class ArticleController extends Controller
             return back()->with('notif', $messages);
         }
 
-        $insert = new Article;
-        $str = strtolower($data['title']);
-        $insert->slug = preg_replace('/\s+/', '-', $str);
-        $insert->title = $data['title'];
-        $insert->description = $data['desc'];
+        $insert = new Adsense;
         if (isset($data['publish']) && $data['publish'] == 1) {
+            $off = Adsense::where('publish', 1)->update(['publish' => 0]);
             $insert->publish = $data['publish'];
         }
-        $insert->thumbnail = json_encode($path);
-        $insert->user_id = 1;
-        $insert->sub_menu_id = $data['sub_menu'];
+        $insert->title = $data['title'];
+        $insert->link = $data['link'];
+        $insert->image = json_encode($path);
         $insert->save();
 
         if ($insert->save()) {
             $messages = [
                 'status' => 'success',
-                'message' => 'Success save article!',
+                'message' => 'Success save adsense link!',
                 'url' => 'close'
             ];
 
-            return redirect('/article')->with('notif', $messages);
+            return redirect('/adsense')->with('notif', $messages);
         } else {
             $messages = [
                 'status' => 'error',
-                'message' => 'Error save article',
+                'message' => 'Error save adsense link',
                 'url' => 'close'
             ];
 
@@ -138,16 +131,14 @@ class ArticleController extends Controller
     public function edit($id) {
         $id = Crypt::decryptString($id);
 
-        $detail = Article::where('id', $id)->first()->toArray();
-        $detail['images'] = json_decode($detail['thumbnail']);
-        $menu = SubMenu::all()->toArray();
+        $detail = Adsense::where('id', $id)->first()->toArray();
+        $detail['images'] = json_decode($detail['image']);
 
-        return view('article.article-edit')->with([
-            'pageTitle' => 'Manage Article', 
-            'title' => 'Edit Article', 
-            'sidebar' => 'article',
+        return view('adsense.adsense-edit')->with([
+            'pageTitle' => 'Manage Adsense', 
+            'title' => 'Edit Adsense', 
+            'sidebar' => 'adsense',
             'detail' => $detail,
-            'menu' => $menu
         ]);
     }
 
@@ -170,91 +161,36 @@ class ArticleController extends Controller
             foreach ($image as $key => $value) {
                 unset($path[$key]);
                 $ext = $value->getClientOriginalExtension();
-                $path_path = $value->storeAs('uploads', 'image_article_'.time().$key.'.'.$ext, 'public');
+                $path_path = $value->storeAs('uploads', 'image_adsense_'.time().$key.'.'.$ext, 'public');
 
                 $path[$key] = $path_path;
             }
         }
 
-        $update = Article::where('id', $data['id'])->first();
-        $str = strtolower($data['title']);
-        $update->slug = preg_replace('/\s+/', '-', $str);
-        $update->title = $data['title'];
-        $update->description = $data['desc'];
+        $update = Adsense::where('id', $data['id'])->first();
         if (isset($data['publish']) && $data['publish'] == 1) {
+            $off = Adsense::where('publish', 1)->update(['publish' => 0]);
             $update->publish = $data['publish'];
         } else {
             $update->publish = 0;
         }
-        $update->thumbnail = json_encode(array_values($path));
-        $update->user_id = 1;
-        $update->sub_menu_id = $data['sub_menu'];
+        $update->title = $data['title'];
+        $update->link = $data['link'];
+        $update->image = json_encode(array_values($path));
         $update->save();
 
         if ($update->save()) {
             $messages = [
                 'status' => 'success',
-                'message' => 'Success edit article!',
+                'message' => 'Success edit adsense!',
                 'url' => 'close'
             ];
 
-            return redirect('/article')->with('notif', $messages);
+            return redirect('/adsense')->with('notif', $messages);
         } else {
             $messages = [
                 'status' => 'error',
-                'message' => 'Error edit article',
-                'url' => 'close'
-            ];
-
-            return back()->with('notif', $messages);
-        }
-    }
-
-    public function publish($id) {
-        $id = Crypt::decryptString($id);
-
-        $update = Article::where('id', $id)->first();
-        $update->publish = 1;
-        $update->save();
-        
-        if ($update->save()) {
-            $messages = [
-                'status' => 'success',
-                'message' => 'Success publish article!',
-                'url' => 'close'
-            ];
-
-            return redirect('/article')->with('notif', $messages);
-        } else {
-            $messages = [
-                'status' => 'error',
-                'message' => 'Error publish article',
-                'url' => 'close'
-            ];
-
-            return back()->with('notif', $messages);
-        }
-    }
-
-    public function unpublish($id) {
-        $id = Crypt::decryptString($id);
-
-        $update = Article::where('id', $id)->first();
-        $update->publish = 0;
-        $update->save();
-        
-        if ($update->save()) {
-            $messages = [
-                'status' => 'success',
-                'message' => 'Success unpublish article!',
-                'url' => 'close'
-            ];
-
-            return redirect('/article')->with('notif', $messages);
-        } else {
-            $messages = [
-                'status' => 'error',
-                'message' => 'Error unpublish article',
+                'message' => 'Error edit adsense',
                 'url' => 'close'
             ];
 
@@ -265,20 +201,74 @@ class ArticleController extends Controller
     public function delete($id) {
         $id = Crypt::decryptString($id);
 
-        $delete = Article::where('id', $id)->delete();
+        $delete = Adsense::where('id', $id)->delete();
         
         if ($delete) {
             $messages = [
                 'status' => 'success',
-                'message' => 'Success delete article!',
+                'message' => 'Success delete adsense!',
                 'url' => 'close'
             ];
 
-            return redirect('/article')->with('notif', $messages);
+            return redirect('/adsense')->with('notif', $messages);
         } else {
             $messages = [
                 'status' => 'error',
-                'message' => 'Error delete article',
+                'message' => 'Error delete adsense',
+                'url' => 'close'
+            ];
+
+            return back()->with('notif', $messages);
+        }
+    }
+
+    public function publish($id) {
+        $id = Crypt::decryptString($id);
+
+        $off = Adsense::where('publish', 1)->update(['publish' => 0]);
+
+        $update = Adsense::where('id', $id)->first();
+        $update->publish = 1;
+        $update->save();
+        
+        if ($update->save()) {
+            $messages = [
+                'status' => 'success',
+                'message' => 'Success publish adsense!',
+                'url' => 'close'
+            ];
+
+            return redirect('/adsense')->with('notif', $messages);
+        } else {
+            $messages = [
+                'status' => 'error',
+                'message' => 'Error publish adsense',
+                'url' => 'close'
+            ];
+
+            return back()->with('notif', $messages);
+        }
+    }
+
+    public function unpublish($id) {
+        $id = Crypt::decryptString($id);
+
+        $update = Adsense::where('id', $id)->first();
+        $update->publish = 0;
+        $update->save();
+        
+        if ($update->save()) {
+            $messages = [
+                'status' => 'success',
+                'message' => 'Success unpublish adsense!',
+                'url' => 'close'
+            ];
+
+            return redirect('/adsense')->with('notif', $messages);
+        } else {
+            $messages = [
+                'status' => 'error',
+                'message' => 'Error unpublish adsense',
                 'url' => 'close'
             ];
 

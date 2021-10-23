@@ -1,4 +1,9 @@
 $(document).ready(function() {
+	if($('#myModal').length) {
+		$('#myModal').modal('show');
+	}
+
+	$('#myModal').modal('show')
 	if ($('.select2').length) {
 		$('.select2').select2();
 	}

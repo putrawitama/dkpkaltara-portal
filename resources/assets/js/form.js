@@ -525,6 +525,18 @@ if ($('#formEditExternal').length) {
     })
 }
 
+if ($('#formAddAdsense').length) {
+    $(".imageMore").change(function(){
+        readFileImageMore(this);
+    })
+}
+
+if ($('#formEdidAdsense').length) {
+    $(".imageMore").change(function(){
+        readFileImageMore(this);
+    })
+}
+
 if ($('#formAddMenu').length) {
     $("#customSwitch1").change(function(){
 		if (this.checked) {

@@ -27,33 +27,6 @@
             </a>
         </div>
     </div>
-    <!-- <div class="row">
-        <div class="col-sm">
-            <a href="http://sidaracantik.kaltaraprov.go.id/">
-                <img src="{{ asset('img/logo/sidara.png') }}" class="w-100" alt="" srcset="">
-            </a>
-        </div>
-        <div class="col-sm">
-            <a href="http://lpse-kaltara.go.id/eproc4">
-                <img src="{{ asset('img/logo/lpse.jpg') }}" class="w-100" alt="" srcset="">
-            </a>
-        </div>
-        <div class="col-sm">
-            <a href="https://kaltaraprov.go.id/">
-                <img src="{{ asset('img/logo/kaltara.jpg') }}" class="w-100" alt="" srcset="">
-            </a>
-        </div>
-        <div class="col-sm">
-            <a href="https://survey.bps.go.id/open/covid">
-                <img src="{{ asset('img/logo/survei.png') }}" class="w-100" alt="" srcset="">
-            </a>
-        </div>
-        <div class="col-sm">
-            <a href="http://ppid.kaltaraprov.go.id/">
-                <img src="{{ asset('img/logo/ppid.jpg') }}" class="w-100" alt="" srcset="">
-            </a>
-        </div>
-    </div> -->
     <div class="row mt-5">
         <div class="col-md-8">
             <hr style="border-color: #004385">
@@ -141,4 +114,28 @@
         </div>
     </div>
 </div>
+
+@if($ads !== null)
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">{{ $ads->title }}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <a href="{{ $ads->link }}" target="_blank"> 
+            <img class="img-thumbnail w-100" src="{{ url('storage').'/'.json_decode($ads->image)[0] }}" alt="First slide">
+        </a>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+@endif
 @endsection

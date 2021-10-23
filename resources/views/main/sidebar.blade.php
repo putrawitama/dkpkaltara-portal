@@ -44,6 +44,13 @@
             <span>Manage External Link</span>
         </a>
     </li>
+
+    <li class="nav-item {{ $sidebar == 'adsense' ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('get.list-adsense') }}">
+            <i class="fas fa-fw fa-ad"></i>
+            <span>Manage Pop Up Iklan</span>
+        </a>
+    </li>
     
     <!-- Divider -->
     <hr class="sidebar-divider">

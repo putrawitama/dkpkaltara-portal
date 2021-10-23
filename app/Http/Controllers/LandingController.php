@@ -12,6 +12,7 @@ use App\Menu;
 use App\SubMenu;
 use App\Gallery;
 use App\External;
+use App\Adsense;
 use Http;
 
 class LandingController extends Controller
@@ -27,11 +28,13 @@ class LandingController extends Controller
         $menu = Menu::with('subMenu')->get();
         $link = External::all();
         $article = Article::where('publish', 1)->with('subMenu')->latest()->take(10)->get();
+        $ads = Adsense::where('publish', 1)->first();
         return view('landing.landing')->with([
             'navbar' => 'home',
             'menu' => $menu,
             'article' => $article,
             'link' => $link,
+            'ads' => $ads,
             'latestIg' => 'CSax6m3nHd9'
         ]);
     }

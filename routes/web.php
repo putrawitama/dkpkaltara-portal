@@ -18,8 +18,8 @@ Route::middleware('authuser')->group(function(){
 
     Route::prefix('article')->group(function () {
         Route::get('/', 'ArticleController@index')->name('get.list-article');
-        Route::post('/list', 'ArticleController@list')->name('post.list-article');
         Route::get('/add', 'ArticleController@add')->name('get.add-article');
+        Route::post('/list', 'ArticleController@list')->name('post.list-article');
         Route::post('/store', 'ArticleController@store')->name('post.store-article');
         Route::get('/edit/{id}', 'ArticleController@edit')->name('get.edit-article');
         Route::post('/update', 'ArticleController@update')->name('post.update-article');
@@ -30,12 +30,23 @@ Route::middleware('authuser')->group(function(){
 
     Route::prefix('external')->group(function () {
         Route::get('/', 'ExternalController@index')->name('get.list-external');
-        Route::post('/list', 'ExternalController@list')->name('post.list-external');
         Route::get('/add', 'ExternalController@add')->name('get.add-external');
+        Route::post('/list', 'ExternalController@list')->name('post.list-external');
         Route::post('/store', 'ExternalController@store')->name('post.store-external');
         Route::get('/edit/{id}', 'ExternalController@edit')->name('get.edit-external');
         Route::post('/update', 'ExternalController@update')->name('post.update-external');
         Route::get('/delete/{id}', 'ExternalController@delete')->name('post.delete-external');
+    });
+    Route::prefix('adsense')->group(function () {
+        Route::get('/', 'AdsenseController@index')->name('get.list-adsense');
+        Route::get('/add', 'AdsenseController@add')->name('get.add-adsense');
+        Route::post('/list', 'AdsenseController@list')->name('post.list-adsense');
+        Route::post('/store', 'AdsenseController@store')->name('post.store-adsense');
+        Route::get('/edit/{id}', 'AdsenseController@edit')->name('get.edit-adsense');
+        Route::post('/update', 'AdsenseController@update')->name('post.update-adsense');
+        Route::get('/delete/{id}', 'AdsenseController@delete')->name('post.delete-adsense');
+        Route::get('/publish/{id}', 'AdsenseController@publish')->name('post.publish-adsense');
+        Route::get('/unpublish/{id}', 'AdsenseController@unpublish')->name('post.unpublish-adsense');
     });
 
     Route::prefix('mail')->group(function () {
@@ -47,8 +58,8 @@ Route::middleware('authuser')->group(function(){
 
     Route::prefix('menu')->group(function () {
         Route::get('/', 'MenuController@index')->name('get.list-menu');
-        Route::post('/list', 'MenuController@list')->name('post.list-menu');
         Route::get('/add', 'MenuController@add')->name('get.add-menu');
+        Route::post('/list', 'MenuController@list')->name('post.list-menu');
         Route::post('/store', 'MenuController@store')->name('post.store-menu');
         Route::get('/edit/{id}', 'MenuController@edit')->name('get.edit-menu');
         Route::post('/update', 'MenuController@update')->name('post.update-menu');
@@ -57,8 +68,8 @@ Route::middleware('authuser')->group(function(){
 
     Route::prefix('gallery')->group(function () {
         Route::get('/', 'GalleryController@index')->name('get.list-gallery');
-        Route::post('/list', 'GalleryController@list')->name('post.list-gallery');
         Route::get('/add', 'GalleryController@add')->name('get.add-gallery');
+        Route::post('/list', 'GalleryController@list')->name('post.list-gallery');
         Route::post('/store', 'GalleryController@store')->name('post.store-gallery');
         Route::get('/edit/{id}', 'GalleryController@edit')->name('get.edit-gallery');
         Route::post('/update', 'GalleryController@update')->name('post.update-gallery');
