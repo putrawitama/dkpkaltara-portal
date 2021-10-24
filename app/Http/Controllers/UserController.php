@@ -178,7 +178,7 @@ class UserController extends Controller
             $messages = [
                 'status' => 'error',
                 'message' => 'Error delete user',
-                'url' => 'close'
+                'url' => 'close',
             ];
 
             return back()->with('notif', $messages);
