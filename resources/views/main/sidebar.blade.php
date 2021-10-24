@@ -78,6 +78,19 @@
             <span>Manage Inbox</span>
         </a>
     </li>
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        User
+    </div>
+    <!-- Nav Item - Charts -->
+    <li class="nav-item {{ $sidebar == 'user' ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('get.list-user') }}">
+            <i class="fas fa-fw fa-user"></i>
+            <span>Manage User</span>
+        </a>
+    </li>
     <!-- Nav Item - Tables -->
     <!-- <li class="nav-item {{ $sidebar == 'applicant' ? 'active' : '' }}">
         <a class="nav-link" href="">

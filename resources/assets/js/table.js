@@ -404,6 +404,56 @@ var table = {
 
 			table.serverSide('tableAdsense',column,'adsense/list',null,columnDefs)
 		}
+        if ($('#tableUser').length) {
+			var column = [
+				{'data':null},
+				{'data':'name'},
+				{'data':'email'},
+				{'data':'created_at'},
+                {'data':null},
+			];
+
+			columnDefs = [
+				{
+					"targets": 3,
+		            "data": "created_at",
+		            "render": function(data, type, full, meta){
+                        var data = moment(full.created_at).format('DD-MM-YYYY hh:mm:ss');
+
+                        if (full.created_at == null) {
+							return null
+						}
+                        return data;
+                    }
+				},
+				{
+		       		"targets": 4,
+		            "data": "id",
+                    "width": "10%",
+                    "orderable": false,
+		            "render": function(data, type, full, meta){
+                        var id = encodeURIComponent(window.btoa(full.id));
+
+						if (full.is_user) {
+							var data = '';
+						} else {
+							var data = '<div class="d-flex">'+
+                                        '<a href="/user/edit/'+full.link_id+'" class="btn btn-primary btn-circle btn-sm btn-action mx-1" title="Edit">'+
+                                            '<i class="fas fa-eye fa-sm"></i>'+
+                                        '</a>'+
+                                        '<a href="/user/delete/'+full.link_id+'" class="btn btn-primary btn-circle btn-sm btn-action mx-1" title="Delete">'+
+                                            '<i class="fas fa-trash-alt fa-sm"></i>'+
+                                        '</a>'
+                                    '</div>';
+						}
+                        
+		              	return data;
+		           	}
+		        }
+	        ];
+
+			table.serverSide('tableUser',column,'user/list',null,columnDefs)
+		}
 	},
 	filter:function(id,value){
         if (id == 'filterParameter') {
@@ -534,10 +584,6 @@ var table = {
 		var bLength = true;
 		var bInfo = true;
 		var page = true;
-		
-		if (id == 'tableUser') {
-			search = false;
-		}
 
 		var svrTable = $("#"+id).DataTable({
 			// processing:true,
@@ -590,6 +636,14 @@ var table = {
 	          svrTable.search(this.value).draw();
             }
         });
+
+		if (id = 'tableUser') {
+			svrTable.on( 'order.dt search.dt', function () {
+				svrTable.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+					cell.innerHTML = i+1;
+				});
+			}).draw();
+		}
 	},
 	setAndPopulate:function(id,columns,data,columnDefs,ops,order){
 

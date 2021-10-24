@@ -97,3 +97,13 @@
     border: none;
     outline: none;
 }
+
+.with-eye input {
+    position: relative;
+}
+.with-eye .eye-content {
+    position: absolute;
+    top: 38px;
+    right: 30px;
+    cursor: pointer;
+}

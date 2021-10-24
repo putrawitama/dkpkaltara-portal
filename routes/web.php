@@ -77,6 +77,16 @@ Route::middleware('authuser')->group(function(){
         Route::get('/unpublish/{id}', 'GalleryController@unpublish')->name('post.unpublish-gallery');
         Route::get('/delete/{id}', 'GalleryController@delete')->name('post.delete-gallery');
     });
+
+    Route::prefix('user')->group(function () {
+        Route::get('/', 'UserController@index')->name('get.list-user');
+        Route::get('/add', 'UserController@add')->name('get.add-user');
+        Route::post('/list', 'UserController@list')->name('post.list-user');
+        Route::post('/store', 'UserController@store')->name('post.store-user');
+        Route::get('/edit/{id}', 'UserController@edit')->name('get.edit-user');
+        Route::post('/update', 'UserController@update')->name('post.update-user');
+        Route::get('/delete/{id}', 'UserController@delete')->name('post.delete-user');
+    });
 });
 
 Route::get('/', 'LandingController@home')->name('landing.main');

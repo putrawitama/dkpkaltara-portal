@@ -22,6 +22,96 @@ const formrules = {
 			}
 		},
     },
+
+	'formAddUser':{
+		ignore: null,
+		rules:{
+			'name': {
+                required:true,
+            },
+			'email': {
+                required:true,
+                STD_VAL_WEB_5:true
+            },
+			'password': {
+                required:true,
+            },
+			'cPassword': {
+				required:true,
+				equalTo: '#password'
+			}
+		},
+		submitHandler:false,
+		messages: {
+			name: {
+				required: 'This fiels is required',
+			},
+			email: {
+				required: 'This fiels is required',
+			},
+			password: {
+				required: 'This fiels is required',
+			},
+			cPassword: {
+				required: 'This fiels is required',
+				equalTo: 'Please fill in the same as the password above'
+			}
+		},
+		errorPlacement: function (error, element) {
+			if (element.is("input[name=password]")) {
+				error.appendTo(element.parents('.with-eye-error'));
+			} else if (element.is("input[name=cPassword]")) {
+				error.appendTo(element.parents('.with-eye-error'));
+			} else { // This is the default behavior
+				error.insertAfter(element);
+			}
+		}
+    },
+
+	'formEditUser':{
+		ignore: null,
+		rules:{
+			'name': {
+                required:true,
+            },
+			'email': {
+                required:true,
+                STD_VAL_WEB_5:true
+            },
+			'password': {
+                // required:true,
+            },
+			'cPassword': {
+				// required:true,
+				equalTo: '#password'
+			}
+		},
+		submitHandler:false,
+		messages: {
+			name: {
+				required: 'This fiels is required',
+			},
+			email: {
+				required: 'This fiels is required',
+			},
+			password: {
+				required: 'This fiels is required',
+			},
+			cPassword: {
+				required: 'This fiels is required',
+				equalTo: 'Please fill in the same as the password above'
+			}
+		},
+		errorPlacement: function (error, element) {
+			if (element.is("input[name=password]")) {
+				error.appendTo(element.parents('.with-eye-error'));
+			} else if (element.is("input[name=cPassword]")) {
+				error.appendTo(element.parents('.with-eye-error'));
+			} else { // This is the default behavior
+				error.insertAfter(element);
+			}
+		}
+    },
 }
 
 var validation = {

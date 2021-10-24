@@ -65,6 +65,20 @@ $(document).ready(function () {
             [ 'view', [ 'undo', 'redo', 'fullscreen', 'codeview', 'help' ] ]
         ]
     });
+
+    $('.eye-content').click(function() {
+        console.log($(this).parent().find('input').attr('type'))
+        var type = $(this).parent().find('input').attr('type');
+        if (type == 'password') {
+            $(this).parent().find('.eye-content').empty();
+            $(this).parent().find('.eye-content').append('<i class="fas fa-fw fa-eye-slash"></i>');
+            $(this).parent().find('input').attr('type', 'text');
+        } else {
+            $(this).parent().find('.eye-content').empty();
+            $(this).parent().find('.eye-content').append('<i class="fas fa-fw fa-eye"></i>');
+            $(this).parent().find('input').attr('type', 'password');
+        }
+    })
 })
 
 // window.onload = function () {
