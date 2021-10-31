@@ -96,6 +96,7 @@ class UserController extends Controller
         $insert = new User;
         $insert->name = $data['name'];
         $insert->email = $data['email'];
+        $insert->user_type = $data['user_type'];
         $insert->password = Hash::make($data['password'].env('SALT_PASS'));
         $insert->save();
 
@@ -141,6 +142,7 @@ class UserController extends Controller
         $update = User::where('id', $data['id'])->first();
         $update->name = $data['name'];
         $update->email = $data['email'];
+        $update->user_type = $data['user_type'];
         if (isset($data['password'])) {
             $update->password = Hash::make($data['password'].env('SALT_PASS'));
         }

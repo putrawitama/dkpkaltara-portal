@@ -409,6 +409,7 @@ var table = {
 				{'data':null},
 				{'data':'name'},
 				{'data':'email'},
+				{'data':null},
 				{'data':'created_at'},
                 {'data':null},
 			];
@@ -416,6 +417,19 @@ var table = {
 			columnDefs = [
 				{
 					"targets": 3,
+		            "data": "user_type",
+		            "render": function(data, type, full, meta){
+                        var data = '-';
+
+                        if (full.user_type == 1) {
+							data = 'Super Admin';
+						} else {
+							data = 'Admin';
+						}
+                        return data;
+                    }
+				}, {
+					"targets": 4,
 		            "data": "created_at",
 		            "render": function(data, type, full, meta){
                         var data = moment(full.created_at).format('DD-MM-YYYY hh:mm:ss');
@@ -425,9 +439,8 @@ var table = {
 						}
                         return data;
                     }
-				},
-				{
-		       		"targets": 4,
+				}, {
+		       		"targets": 5,
 		            "data": "id",
                     "width": "10%",
                     "orderable": false,

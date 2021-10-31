@@ -43,6 +43,19 @@
 
                     <div class="row">
                         <div class="col-lg-11 col-md-6 col-12">
+                            <div class="form-group">
+                                <label for="">User Type</label>
+                                <select name="user_type" id="user_type" class="form-control bg-gray-200 border-0">
+                                    <option value="">Choose User Type</option>
+                                    <option value="1" {{ $detail['user_type'] == 1 ? 'selected' : '' }}>Super Admin</option>
+                                    <option value="2" {{ $detail['user_type'] == 2 ? 'selected' : '' }}>Admin</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-11 col-md-6 col-12">
                             <div class="form-group with-eye-error">
                                 <label for="">New Password</label>
                                 <div class="d-flex with-eye">

@@ -31,6 +31,7 @@ class LoginController extends Controller
                     'id' => $user->id,
                     'name' => $user->name,
                     'email' => $user->email,
+                    'user_type' => $user->user_type,
                 ];
                 Session::put('session_id', $session);
 

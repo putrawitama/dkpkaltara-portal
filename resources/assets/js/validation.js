@@ -33,6 +33,9 @@ const formrules = {
                 required:true,
                 STD_VAL_WEB_5:true
             },
+			'user_type': {
+                required:true
+            },
 			'password': {
                 required:true,
             },
@@ -47,6 +50,9 @@ const formrules = {
 				required: 'This fiels is required',
 			},
 			email: {
+				required: 'This fiels is required',
+			},
+			user_type: {
 				required: 'This fiels is required',
 			},
 			password: {
@@ -78,6 +84,9 @@ const formrules = {
                 required:true,
                 STD_VAL_WEB_5:true
             },
+			'user_type': {
+                required:true
+            },
 			'password': {
                 // required:true,
             },
@@ -92,6 +101,9 @@ const formrules = {
 				required: 'This fiels is required',
 			},
 			email: {
+				required: 'This fiels is required',
+			},
+			user_type: {
 				required: 'This fiels is required',
 			},
 			password: {

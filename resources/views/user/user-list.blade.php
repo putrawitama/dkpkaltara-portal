@@ -22,8 +22,9 @@
                         <th>No</th>
                         <th>Name</th>
                         <th>Email</th>
+                        <th>User Type</th>
                         <th>Created At</th>
-                        <th></th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>

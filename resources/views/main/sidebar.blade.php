@@ -78,6 +78,8 @@
             <span>Manage Inbox</span>
         </a>
     </li>
+
+    @if(session('session_id.user_type') == 1)
     <!-- Divider -->
     <hr class="sidebar-divider">
     <!-- Heading -->
@@ -91,6 +93,7 @@
             <span>Manage User</span>
         </a>
     </li>
+    @endif
     <!-- Nav Item - Tables -->
     <!-- <li class="nav-item {{ $sidebar == 'applicant' ? 'active' : '' }}">
         <a class="nav-link" href="">
