@@ -58,6 +58,13 @@
                 </div>
             </div>
 
+            <div class="row mt-3 mb-3">
+                <div class="col-lg-10 col-md-12">
+                    <p>*Jika ingin menyematkan dokumen PDF pada article, maka salin kode dibawah ini pada bagian isi Content. Pada bagian isi Content anda dapat meng-klik tombol <span class="text-danger">&lt;/&gt;</span> dan setelah itu tempelkan kode yang anda salin pada bagian paling bawah artikel anda. Ubah <span class="text-danger">XXXXXXXXXXXXXXXXXXXX</span> dengan id dokumen ada pada google drive.</p>
+                    <pre><code>&lt;iframe src="https://drive.google.com/file/d/XXXXXXXXXXXXXXXXXXXX/preview" class="w-50 h-75"&gt;&lt;/iframe&gt;</code></pre>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-lg-11 col-lg-6 col-12">
                     <div class="form-group">

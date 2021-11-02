@@ -159,3 +159,9 @@ var other = {
 function reload(){
 	location.reload();
 }
+
+function showPreview(image) {
+	var preview = image.getAttribute("data-image");
+	$('#imagepreview').attr('src', preview); // here asign the image to the modal when the user click the enlarge link
+   	$('#imagemodal').modal('show');
+}

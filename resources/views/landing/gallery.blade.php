@@ -11,9 +11,18 @@
             {!! $detail->desc !!}
             @if($type === 'photo')
                 @php $images = json_decode($detail->images); @endphp
+                <div class="row mt-3">
                 @foreach($images as $img)
-                    <img class="d-block w-100 mb-4" src="{{ url('storage').'/'.$img }}" alt="First slide">
+                    <div class="col-md-3">
+                        <a href="#" onclick="showPreview(this)" data-image="{{ url('storage').'/'.$img }}">
+                            <div class="card bg-dark text-white">
+                                <img src="{{ url('storage').'/'.$img }}" class="card-img" alt="image gallery">
+                            </div>
+                        </a>
+                    </div>
+                    <!-- <img class="d-block w-100 mb-4" src="{{ url('storage').'/'.$img }}" alt="First slide"> -->
                 @endforeach
+                </div>
             @else
                 <video class="card-img-top w-100" controls>
                     <source src="{{ url('storage').'/'.json_decode($detail->images)[0] }}" type="video/mp4">
@@ -43,5 +52,21 @@
             @endfor
             </div>
         @endif
+    </div>
+    <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Image preview</h4>
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                </div>
+                <div class="modal-body">
+                    <img src="" id="imagepreview" class="w-100">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection

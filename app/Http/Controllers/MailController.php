@@ -114,4 +114,30 @@ class MailController extends Controller
 
         return redirect('/kontak')->with('notif', 'Pesan Telah Terkirim');
     }
+
+    public function responded($id) {
+        $id = Crypt::decryptString($id);
+
+        $update = Mail::where('id', $id)->first();
+        $update->is_responded = 1;
+        $update->save();
+        
+        if ($update->save()) {
+            $messages = [
+                'status' => 'success',
+                'message' => 'Success responded the mail!',
+                'url' => 'close'
+            ];
+
+            return redirect('/mail')->with('notif', $messages);
+        } else {
+            $messages = [
+                'status' => 'error',
+                'message' => 'Error respond the mail',
+                'url' => 'close'
+            ];
+
+            return back()->with('notif', $messages);
+        }
+    }
 }
